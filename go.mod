@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/stretchr/testify v1.7.1
-	github.com/xuri/xgen v0.0.0-20220527070817-98e2a901798b
 	golang.org/x/net v0.0.0-20220526153639-5463443f8c37
 )
 
