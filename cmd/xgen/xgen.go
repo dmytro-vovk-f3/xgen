@@ -29,7 +29,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/xuri/xgen"
+	"github.com/dmytro-vovk-f3/xgen"
 )
 
 // Config holds user-defined overrides and filters that are used when
