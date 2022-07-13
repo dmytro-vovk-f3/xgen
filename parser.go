@@ -158,7 +158,7 @@ func (opt *Options) GetValueType(value string, XSDSchema []interface{}) (valueTy
 		valueType = buildType
 		return
 	}
-	valueType = getBasefromSimpleType(trimNSPrefix(value), XSDSchema)
+	valueType = getBaseFromSimpleType(trimNSPrefix(value), XSDSchema)
 	if valueType != trimNSPrefix(value) && valueType != "" {
 		return
 	}
@@ -194,7 +194,7 @@ func (opt *Options) GetValueType(value string, XSDSchema []interface{}) (valueTy
 			if parser.Parse() != nil {
 				return
 			}
-			if vt := getBasefromSimpleType(trimNSPrefix(value), parser.ProtoTree); vt != trimNSPrefix(value) {
+			if vt := getBaseFromSimpleType(trimNSPrefix(value), parser.ProtoTree); vt != trimNSPrefix(value) {
 				valueType = vt
 			}
 		}
@@ -223,7 +223,7 @@ func (opt *Options) GetValueType(value string, XSDSchema []interface{}) (valueTy
 		}
 		depXSDSchema = parser.ProtoTree
 	}
-	valueType = getBasefromSimpleType(trimNSPrefix(value), depXSDSchema)
+	valueType = getBaseFromSimpleType(trimNSPrefix(value), depXSDSchema)
 	if valueType != trimNSPrefix(value) && valueType != "" {
 		return
 	}
@@ -242,6 +242,6 @@ func (opt *Options) GetValueType(value string, XSDSchema []interface{}) (valueTy
 	if parser.Parse() != nil {
 		return
 	}
-	valueType = getBasefromSimpleType(trimNSPrefix(value), parser.ProtoTree)
+	valueType = getBaseFromSimpleType(trimNSPrefix(value), parser.ProtoTree)
 	return
 }

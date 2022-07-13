@@ -101,7 +101,7 @@ func genCFieldType(name string) string {
 func (gen *CodeGenerator) CSimpleType(v *SimpleType) {
 	if v.List {
 		if _, ok := gen.StructAST[v.Name]; !ok {
-			fieldType := genCFieldType(getBasefromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree))
+			fieldType := genCFieldType(getBaseFromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree))
 			content := fmt.Sprintf("%s %s[];\n", genCFieldType(fieldType), genCFieldName(v.Name, false))
 			gen.StructAST[v.Name] = content
 			fieldName := genCFieldName(v.Name, true)
@@ -117,7 +117,7 @@ func (gen *CodeGenerator) CSimpleType(v *SimpleType) {
 				memberType := member.value
 
 				if memberType == "" { // fix order issue
-					memberType = getBasefromSimpleType(memberName, gen.ProtoTree)
+					memberType = getBaseFromSimpleType(memberName, gen.ProtoTree)
 				}
 				var plural, fieldType string
 				var ok bool
@@ -136,7 +136,7 @@ func (gen *CodeGenerator) CSimpleType(v *SimpleType) {
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		var plural, fieldType string
 		var ok bool
-		if fieldType, ok = innerArray(genCFieldType(getBasefromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree))); ok {
+		if fieldType, ok = innerArray(genCFieldType(getBaseFromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree))); ok {
 			plural = "[]"
 		}
 		gen.StructAST[v.Name] = fmt.Sprintf("%s %s%s", fieldType, genCFieldName(v.Name, false), plural)
@@ -151,7 +151,7 @@ func (gen *CodeGenerator) CComplexType(v *ComplexType) {
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		content := "struct {\n"
 		for _, attrGroup := range v.AttributeGroup {
-			fieldType := getBasefromSimpleType(trimNSPrefix(attrGroup.Ref), gen.ProtoTree)
+			fieldType := getBaseFromSimpleType(trimNSPrefix(attrGroup.Ref), gen.ProtoTree)
 			content += fmt.Sprintf("\t%s %s;\n", genCFieldType(fieldType), genCFieldName(attrGroup.Name, false))
 		}
 
@@ -162,7 +162,7 @@ func (gen *CodeGenerator) CComplexType(v *ComplexType) {
 			}
 			var plural, fieldType string
 			var ok bool
-			if fieldType, ok = innerArray(genCFieldType(getBasefromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree))); ok {
+			if fieldType, ok = innerArray(genCFieldType(getBaseFromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree))); ok {
 				plural = "[]"
 			}
 			content += fmt.Sprintf("\t%s %sAttr%s; // attr%s\n", fieldType, genCFieldName(attribute.Name, false), plural, optional)
@@ -173,13 +173,13 @@ func (gen *CodeGenerator) CComplexType(v *ComplexType) {
 			if group.Plural {
 				plural = "[]"
 			}
-			content += fmt.Sprintf("\t%s %s%s;\n", genCFieldType(getBasefromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree)), genCFieldName(group.Name, false), plural)
+			content += fmt.Sprintf("\t%s %s%s;\n", genCFieldType(getBaseFromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree)), genCFieldName(group.Name, false), plural)
 		}
 
 		for _, element := range v.Elements {
 			var plural, fieldType string
 			var ok bool
-			if fieldType, ok = innerArray(genCFieldType(getBasefromSimpleType(trimNSPrefix(element.Type), gen.ProtoTree))); ok || element.Plural {
+			if fieldType, ok = innerArray(genCFieldType(getBaseFromSimpleType(trimNSPrefix(element.Type), gen.ProtoTree))); ok || element.Plural {
 				plural = "[]"
 			}
 			content += fmt.Sprintf("\t%s %s%s;\n", fieldType, genCFieldName(element.Name, false), plural)
@@ -202,7 +202,7 @@ func (gen *CodeGenerator) CGroup(v *Group) {
 			if element.Plural {
 				plural = "[]"
 			}
-			content += fmt.Sprintf("\t%s %s%s;\n", genCFieldType(getBasefromSimpleType(trimNSPrefix(element.Type), gen.ProtoTree)), genCFieldName(element.Name, false), plural)
+			content += fmt.Sprintf("\t%s %s%s;\n", genCFieldType(getBaseFromSimpleType(trimNSPrefix(element.Type), gen.ProtoTree)), genCFieldName(element.Name, false), plural)
 		}
 
 		for _, group := range v.Groups {
@@ -210,7 +210,7 @@ func (gen *CodeGenerator) CGroup(v *Group) {
 			if group.Plural {
 				plural = "[]"
 			}
-			content += fmt.Sprintf("\t%s %s%s;\n", genCFieldType(getBasefromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree)), genCFieldName(group.Name, false), plural)
+			content += fmt.Sprintf("\t%s %s%s;\n", genCFieldType(getBaseFromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree)), genCFieldName(group.Name, false), plural)
 		}
 
 		content += "}"
@@ -231,7 +231,7 @@ func (gen *CodeGenerator) CAttributeGroup(v *AttributeGroup) {
 			if attribute.Optional {
 				optional = `, optional`
 			}
-			if fieldType, ok = innerArray(genCFieldType(getBasefromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree))); ok {
+			if fieldType, ok = innerArray(genCFieldType(getBaseFromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree))); ok {
 				plural = "[]"
 			}
 			content += fmt.Sprintf("\t%s %sAttr%s; // attr%s\n", fieldType, genCFieldName(attribute.Name, false), plural, optional)
@@ -248,7 +248,7 @@ func (gen *CodeGenerator) CElement(v *Element) {
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		var plural, fieldType string
 		var ok bool
-		if fieldType, ok = innerArray(genCFieldType(getBasefromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree))); ok || v.Plural {
+		if fieldType, ok = innerArray(genCFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree))); ok || v.Plural {
 			plural = "[]"
 		}
 		gen.StructAST[v.Name] = fmt.Sprintf("%s %s%s", fieldType, genCFieldName(v.Name, false), plural)
@@ -261,7 +261,7 @@ func (gen *CodeGenerator) CAttribute(v *Attribute) {
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		var plural, fieldType string
 		var ok bool
-		if fieldType, ok = innerArray(genCFieldType(getBasefromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree))); ok || v.Plural {
+		if fieldType, ok = innerArray(genCFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree))); ok || v.Plural {
 			plural = "[]"
 		}
 		gen.StructAST[v.Name] = fmt.Sprintf("%s %s%s", fieldType, genCFieldName(v.Name, false), plural)

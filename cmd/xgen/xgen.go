@@ -68,11 +68,11 @@ func parseFlags() *Config {
 	helpPtr := flag.Bool("h", false, "Show this help and exit")
 	flag.Parse()
 	if *helpPtr {
-		fmt.Printf("xgen version: %s\r\nCopyright (c) 2020 - 2021 Ri Xu https://xuri.me All rights reserved.\r\n\r\nUsage:\r\n$ xgen [<flag> ...] <XSD file or directory> ...\n  -i <path>\tInput file path or directory for the XML schema definition\r\n  -o <path>\tOutput file path or directory for the generated code\r\n  -p     \tSpecify the package name\r\n  -l      \tSpecify the language of generated code (Go/C/Java/Rust/TypeScript)\r\n  -h     \tOutput this help and exit\r\n  -v     \tOutput version and exit\r\n", Cfg.Version)
+		fmt.Printf("xgen version: %s\nCopyright (c) 2020 - 2021 Ri Xu https://xuri.me All rights reserved.\n\nUsage:\n$ xgen [<flag> ...] <XSD file or directory> ...\n  -i <path>\tInput file path or directory for the XML schema definition\n  -o <path>\tOutput file path or directory for the generated code\n  -p     \tSpecify the package name\n  -l      \tSpecify the language of generated code (Go/C/Java/Rust/TypeScript)\n  -h     \tOutput this help and exit\n  -v     \tOutput version and exit\n", Cfg.Version)
 		os.Exit(0)
 	}
 	if *verPtr {
-		fmt.Printf("xgen version: %s\r\n", Cfg.Version)
+		fmt.Printf("xgen version: %s\n", Cfg.Version)
 		os.Exit(0)
 	}
 	if *iPtr == "" {
@@ -124,7 +124,7 @@ func main() {
 			ProtoTree:           make([]interface{}, 0),
 			RemoteSchema:        make(map[string][]byte),
 		}).Parse(); err != nil {
-			fmt.Printf("process error on %s: %s\r\n", file, err.Error())
+			fmt.Printf("process error on %s: %s\n", file, err.Error())
 			os.Exit(1)
 		}
 	}

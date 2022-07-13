@@ -144,7 +144,7 @@ func getBuildInTypeByLang(value, lang string) (buildType string, ok bool) {
 	return
 }
 
-func getBasefromSimpleType(name string, XSDSchema []interface{}) string {
+func getBaseFromSimpleType(name string, XSDSchema []interface{}) string {
 	for _, ele := range XSDSchema {
 		switch v := ele.(type) {
 		case *SimpleType:
@@ -255,11 +255,11 @@ func fetchSchema(URL string) ([]byte, error) {
 }
 
 func genFieldComment(name, doc, prefix string) string {
-	docReplacer := strings.NewReplacer("\n", fmt.Sprintf("\r\n%s ", prefix), "\t", "")
+	docReplacer := strings.NewReplacer("\n", fmt.Sprintf("\n%s ", prefix), "\t", "")
 	if doc == "" {
-		return fmt.Sprintf("\r\n%s %s ...\r\n", prefix, name)
+		return fmt.Sprintf("\n%s %s ...\n", prefix, name)
 	}
-	return fmt.Sprintf("\r\n%s %s is %s\r\n", prefix, name, docReplacer.Replace(doc))
+	return fmt.Sprintf("\n%s %s is %s\n", prefix, name, docReplacer.Replace(doc))
 }
 
 type kvPair struct {

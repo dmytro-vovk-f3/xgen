@@ -85,6 +85,8 @@ pub struct TopLevel {
 	pub last_updated: Option<u8>,
 	#[serde(rename = "nested")]
 	pub nested: MyType7,
+	#[serde(rename = "nested2")]
+	pub nested2: MyType7,
 	#[serde(rename = "myType1")]
 	pub my_type1: Vec<String>,
 	#[serde(rename = "myType2")]

@@ -48,10 +48,11 @@ type MyType7 struct {
 
 // TopLevel ...
 type TopLevel struct {
-	CostAttr        float64    `xml:"cost,attr,omitempty"`
-	LastUpdatedAttr string     `xml:"LastUpdated,attr,omitempty"`
-	Nested          *MyType7   `xml:"nested"`
-	MyType1         [][]byte   `xml:"myType1"`
-	MyType2         []*MyType2 `xml:"myType2"`
+	CostAttr        float64   `xml:"cost,attr,omitempty"`
+	LastUpdatedAttr string    `xml:"LastUpdated,attr,omitempty"`
+	Nested          *MyType7  `xml:"nested,omitempty"`
+	Nested2         MyType7   `xml:"nested2"`
+	MyType1         [][]byte  `xml:"myType1"`
+	MyType2         []MyType2 `xml:"myType2"`
 	*MyType6
 }

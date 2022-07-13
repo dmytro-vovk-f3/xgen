@@ -39,6 +39,7 @@ typedef struct {
 	float CostAttr; // attr, optional
 	char LastUpdatedAttr; // attr, optional
 	MyType7 Nested;
+	MyType7 Nested2;
 	char MyType1[];
 	MyType2 MyType2[];
 } TopLevel;

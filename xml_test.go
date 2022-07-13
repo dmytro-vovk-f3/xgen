@@ -47,7 +47,7 @@ func TestGeneratedGo(t *testing.T) {
 			remarshaled, err := xml.MarshalIndent(tc.receivingStruct, "", "    ")
 			require.NoError(t, err)
 
-			assert.Equal(t, string(input), string(remarshaled))
+			assert.Equal(t, string(input), string(remarshaled)+"\n")
 		})
 	}
 }
