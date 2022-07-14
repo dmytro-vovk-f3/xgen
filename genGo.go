@@ -91,7 +91,7 @@ func (gen *CodeGenerator) GenGo() error {
 		f.WriteString(fmt.Sprintf("package %s\n%s%s", packageName, importPackage, gen.Field))
 		return err
 	}
-	f.Write(source)
+	_, err = f.Write(source)
 	return err
 }
 
@@ -185,12 +185,12 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 		return
 	}
 
-	content := " struct {\n"
+	var fields []string
 	fieldName := genGoFieldName(v.Name, true)
 
 	if fieldName != v.Name {
 		gen.ImportEncodingXML = true
-		content += fmt.Sprintf("\tXMLName\txml.Name\t`xml:\"%s\"`\n", v.Name)
+		fields = append(fields, fmt.Sprintf("\tXMLName\txml.Name\t`xml:\"%s\"`", v.Name))
 	}
 
 	for _, attrGroup := range v.AttributeGroup {
@@ -198,7 +198,7 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 		if fieldType == "time.Time" {
 			gen.ImportTime = true
 		}
-		content += fmt.Sprintf("\t%s\t%s\n", genGoFieldName(attrGroup.Name, false), genGoFieldType(fieldType))
+		fields = append(fields, fmt.Sprintf("\t%s\t%s", genGoFieldName(attrGroup.Name, false), genGoFieldType(fieldType)))
 	}
 
 	for _, attribute := range v.Attributes {
@@ -210,7 +210,7 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 		if fieldType == "time.Time" {
 			gen.ImportTime = true
 		}
-		content += fmt.Sprintf("\t%sAttr\t%s\t`xml:\"%s,attr%s\"`\n", genGoFieldName(attribute.Name, false), fieldType, attribute.Name, optional)
+		fields = append(fields, fmt.Sprintf("\t%sAttr\t%s\t`xml:\"%s,attr%s\"`", genGoFieldName(attribute.Name, false), fieldType, attribute.Name, optional))
 	}
 
 	for _, group := range v.Groups {
@@ -218,7 +218,7 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 		if group.Plural {
 			plural = "[]"
 		}
-		content += fmt.Sprintf("\t%s\t%s%s\n", genGoFieldName(group.Name, false), plural, genGoFieldType(getBaseFromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree)))
+		fields = append(fields, fmt.Sprintf("\t%s\t%s%s", genGoFieldName(group.Name, false), plural, genGoFieldType(getBaseFromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree))))
 	}
 
 	for _, element := range v.Elements {
@@ -242,7 +242,7 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 			gen.ImportTime = true
 		}
 
-		content += fmt.Sprintf("\t%s\t%s%s%s\t`xml:\"%s%s\"`\n", genGoFieldName(element.Name, false), plural, typePrefix, fieldType, element.Name, tagSuffix)
+		fields = append(fields, fmt.Sprintf("\t%s\t%s%s%s\t`xml:\"%s%s\"`", genGoFieldName(element.Name, false), plural, typePrefix, fieldType, element.Name, tagSuffix))
 	}
 
 	if len(v.Base) > 0 {
@@ -250,14 +250,18 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 		// If it's not built-in one, embed the base type in the struct for the child type
 		// to effectively inherit all of the base type's fields
 		if isGoBuiltInType(v.Base) {
-			content += fmt.Sprintf("\tValue\t%s\t`xml:\",chardata\"`\n", genGoFieldType(v.Base))
+			fields = append(fields, fmt.Sprintf("\tValue\t%s\t`xml:\",chardata\"`", genGoFieldType(v.Base)))
 		} else {
-			content += fmt.Sprintf("\t%s\n", "*"+genGoFieldType(v.Base))
+			fields = append(fields, fmt.Sprintf("\t%s", "*"+genGoFieldType(v.Base)))
 		}
 	}
-	content += "}\n"
 
-	gen.StructAST[v.Name] = content
+	if len(fields) == 0 {
+		gen.StructAST[v.Name] = " interface{}\n"
+	} else {
+		gen.StructAST[v.Name] = " struct {\n" + strings.Join(fields, "\n") + "}\n"
+	}
+
 	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
 }
 

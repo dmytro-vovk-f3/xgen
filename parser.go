@@ -107,13 +107,11 @@ func (opt *Options) Parse() (err error) {
 
 		switch element := token.(type) {
 		case xml.StartElement:
-
 			opt.InElement = element.Name.Local
 			funcName := fmt.Sprintf("On%s", MakeFirstUpperCase(opt.InElement))
 			if err = callFuncByName(opt, funcName, []reflect.Value{reflect.ValueOf(element), reflect.ValueOf(opt.ProtoTree)}); err != nil {
 				return
 			}
-
 		case xml.EndElement:
 			funcName := fmt.Sprintf("End%s", MakeFirstUpperCase(element.Name.Local))
 			if err = callFuncByName(opt, funcName, []reflect.Value{reflect.ValueOf(element), reflect.ValueOf(opt.ProtoTree)}); err != nil {
@@ -123,9 +121,7 @@ func (opt *Options) Parse() (err error) {
 			if err = opt.OnCharData(string(element), opt.ProtoTree); err != nil {
 				return
 			}
-		default:
 		}
-
 	}
 
 	if !opt.Extract {

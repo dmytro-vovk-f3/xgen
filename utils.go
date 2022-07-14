@@ -192,11 +192,11 @@ func ToTitle(val string) string {
 	var buf strings.Builder
 	buf.Grow(utf8.UTFMax * len(val))
 
-	for i, rune := range val {
+	for i, r := range val {
 		if i == 0 {
-			rune = unicode.ToUpper(rune)
+			r = unicode.ToUpper(r)
 		}
-		buf.WriteRune(rune)
+		buf.WriteRune(r)
 	}
 
 	return buf.String()
