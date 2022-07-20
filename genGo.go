@@ -11,12 +11,17 @@ package xgen
 import (
 	"fmt"
 	"go/format"
+	"io"
 	"os"
 	"reflect"
 	"strings"
 )
 
-const omitEmpty = `,omitempty`
+const (
+	interfaceType = " interface{}\n"
+	omitEmpty     = `,omitempty`
+	timePackage   = "time.Time"
+)
 
 // CodeGenerator holds code generator overrides and runtime data that are used
 // when generate code from proto tree.
@@ -31,31 +36,31 @@ type CodeGenerator struct {
 	StructAST         map[string]string
 }
 
-var goBuildinType = map[string]bool{
-	"xml.Name":      true,
-	"byte":          true,
-	"[]byte":        true,
-	"bool":          true,
-	"[]bool":        true,
-	"complex64":     true,
-	"complex128":    true,
-	"float32":       true,
-	"float64":       true,
-	"int":           true,
-	"int8":          true,
-	"int16":         true,
-	"int32":         true,
-	"int64":         true,
-	"interface":     true,
-	"[]interface{}": true,
-	"string":        true,
-	"[]string":      true,
-	"time.Time":     true,
-	"uint":          true,
-	"uint8":         true,
-	"uint16":        true,
-	"uint32":        true,
-	"uint64":        true,
+var goBuiltinType = map[string]struct{}{
+	"[]bool":        {},
+	"[]byte":        {},
+	"[]interface{}": {},
+	"[]string":      {},
+	"bool":          {},
+	"byte":          {},
+	"complex128":    {},
+	"complex64":     {},
+	"float32":       {},
+	"float64":       {},
+	"int":           {},
+	"int16":         {},
+	"int32":         {},
+	"int64":         {},
+	"int8":          {},
+	"interface":     {},
+	"string":        {},
+	"time.Time":     {},
+	"uint":          {},
+	"uint16":        {},
+	"uint32":        {},
+	"uint64":        {},
+	"uint8":         {},
+	"xml.Name":      {},
 }
 
 // GenGo generate Go programming language source code for XML schema
@@ -66,34 +71,56 @@ func (gen *CodeGenerator) GenGo() error {
 		if ele == nil {
 			continue
 		}
+
 		funcName := fmt.Sprintf("Go%s", reflect.TypeOf(ele).String()[6:])
-		callFuncByName(gen, funcName, []reflect.Value{reflect.ValueOf(ele)})
+
+		if funcName != "GoSimpleType" {
+			if err := callFuncByName(gen, funcName, []reflect.Value{reflect.ValueOf(ele)}); err != nil {
+				panic(err)
+			}
+		}
 	}
+
 	f, err := os.Create(gen.File + ".go")
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+
+	defer func(c io.Closer) { _ = c.Close() }(f)
+
 	var importPackage, packages string
 	if gen.ImportTime {
 		packages += "\t\"time\"\n"
 	}
+
 	if gen.ImportEncodingXML {
 		packages += "\t\"encoding/xml\"\n"
 	}
+
 	if packages != "" {
 		importPackage = fmt.Sprintf("import (\n%s)", packages)
 	}
+
 	packageName := gen.Package
 	if packageName == "" {
 		packageName = "schema"
 	}
-	source, err := format.Source([]byte(fmt.Sprintf("%s\n\npackage %s\n%s%s", copyright, packageName, importPackage, gen.Field)))
+
+	source, err := format.Source(
+		[]byte(fmt.Sprintf(
+			"%s\n\npackage %s\n%s%s",
+			copyright,
+			packageName,
+			importPackage,
+			gen.Field,
+		)),
+	)
 	if err != nil {
-		f.WriteString(fmt.Sprintf("package %s\n%s%s", packageName, importPackage, gen.Field))
 		return err
 	}
+
 	_, err = f.Write(source)
+
 	return err
 }
 
@@ -101,23 +128,27 @@ func genGoFieldName(name string, unique bool) (fieldName string) {
 	for _, str := range strings.Split(name, ":") {
 		fieldName += MakeFirstUpperCase(str)
 	}
+
 	var tmp string
 	for _, str := range strings.Split(fieldName, ".") {
 		tmp += MakeFirstUpperCase(str)
 	}
-	fieldName = tmp
-	fieldName = strings.Replace(strings.Replace(fieldName, "-", "", -1), "_", "", -1)
+
+	fieldName = strings.NewReplacer("-", "", "_", "").Replace(tmp)
+
 	if unique {
 		fieldNameCount[fieldName]++
+
 		if count := fieldNameCount[fieldName]; count != 1 {
 			fieldName = fmt.Sprintf("%s%d", fieldName, count)
 		}
 	}
+
 	return
 }
 
 func genGoFieldType(name string) string {
-	if _, ok := goBuildinType[name]; ok {
+	if _, ok := goBuiltinType[name]; ok {
 		return name
 	}
 
@@ -127,7 +158,7 @@ func genGoFieldType(name string) string {
 		fieldType += MakeFirstUpperCase(str)
 	}
 
-	fieldType = strings.Replace(MakeFirstUpperCase(strings.Replace(fieldType, "-", "", -1)), "_", "", -1)
+	fieldType = strings.ReplaceAll(MakeFirstUpperCase(strings.ReplaceAll(fieldType, "-", "")), "_", "")
 	if fieldType != "" {
 		return fieldType
 	}
@@ -141,13 +172,13 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 	if v.List {
 		if _, ok := gen.StructAST[v.Name]; !ok {
 			fieldType := genGoFieldType(getBaseFromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree))
-			if fieldType == "time.Time" {
+			if fieldType == timePackage {
 				gen.ImportTime = true
 			}
 			content := fmt.Sprintf(" []%s\n", genGoFieldType(fieldType))
 			gen.StructAST[v.Name] = content
 			fieldName := genGoFieldName(v.Name, true)
-			gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+			gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 			return
 		}
 	}
@@ -177,10 +208,10 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 		if len(fields) > 0 {
 			gen.StructAST[v.Name] = " struct {\n" + strings.Join(fields, "\n") + "\n}\n"
 		} else {
-			gen.StructAST[v.Name] = " interface{}\n"
+			gen.StructAST[v.Name] = interfaceType
 		}
 
-		gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 
 		return
 	}
@@ -188,14 +219,14 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		gen.StructAST[v.Name] = " " + genGoFieldType(getBaseFromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree)) + "\n"
 		fieldName := genGoFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
 // GoComplexType generates code for complex type XML schema in Go language
 // syntax.
 func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
-	if _, ok := gen.StructAST[v.Name]; ok {
+	if gen.seen(v.Name) {
 		return
 	}
 
@@ -209,7 +240,7 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 
 	for _, attrGroup := range v.AttributeGroup {
 		fieldType := getBaseFromSimpleType(trimNSPrefix(attrGroup.Ref), gen.ProtoTree)
-		if fieldType == "time.Time" {
+		if fieldType == timePackage {
 			gen.ImportTime = true
 		}
 		fields = append(fields, fmt.Sprintf("\t%s\t%s", genGoFieldName(attrGroup.Name, false), genGoFieldType(fieldType)))
@@ -221,11 +252,11 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 			optional = omitEmpty
 		}
 		fieldType := genGoFieldType(getBaseFromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree))
-		if fieldType == "time.Time" {
+		if fieldType == timePackage {
 			gen.ImportTime = true
 		}
 		fields = append(fields, fmt.Sprintf(
-			"\t%sAttr\t%s\t`xml:\"%s,attr%s\"`",
+			"\t%s\t%s\t`xml:\"%s,attr%s\"`",
 			genGoFieldName(attribute.Name, false),
 			fieldType,
 			attribute.Name,
@@ -234,23 +265,19 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 	}
 
 	for _, group := range v.Groups {
-		var plural string
-		if group.Plural {
-			plural = "[]"
-		}
-		fields = append(fields, fmt.Sprintf("\t%s\t%s%s", genGoFieldName(group.Name, false), plural, genGoFieldType(getBaseFromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree))))
+		fields = append(fields, fmt.Sprintf(
+			"\t%s\t%s%s",
+			genGoFieldName(group.Name, false),
+			plural(group.Plural),
+			genGoFieldType(getBaseFromSimpleType(trimNSPrefix(group.Ref), gen.ProtoTree))),
+		)
 	}
 
 	for _, element := range v.Elements {
 		var (
-			plural     string
 			typePrefix string
 			tagSuffix  string
 		)
-
-		if element.Plural {
-			plural = "[]"
-		}
 
 		if element.Nillable {
 			typePrefix = "*"
@@ -258,11 +285,19 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 		}
 
 		fieldType := genGoFieldType(getBaseFromSimpleType(trimNSPrefix(element.Type), gen.ProtoTree))
-		if fieldType == "time.Time" {
+		if fieldType == timePackage {
 			gen.ImportTime = true
 		}
 
-		fields = append(fields, fmt.Sprintf("\t%s\t%s%s%s\t`xml:\"%s%s\"`", genGoFieldName(element.Name, false), plural, typePrefix, fieldType, element.Name, tagSuffix))
+		fields = append(fields, fmt.Sprintf(
+			"\t%s\t%s%s%s\t`xml:\"%s%s\"`",
+			genGoFieldName(element.Name, false),
+			plural(element.Plural),
+			typePrefix,
+			fieldType,
+			element.Name,
+			tagSuffix,
+		))
 	}
 
 	if len(v.Base) > 0 {
@@ -277,16 +312,16 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 	}
 
 	if len(fields) == 0 {
-		gen.StructAST[v.Name] = " interface{}\n"
+		gen.StructAST[v.Name] = interfaceType
 	} else {
 		gen.StructAST[v.Name] = " struct {\n" + strings.Join(fields, "\n") + "}\n"
 	}
 
-	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 }
 
 func isGoBuiltInType(typeName string) bool {
-	_, builtIn := goBuildinType[typeName]
+	_, builtIn := goBuiltinType[typeName]
 	return builtIn
 }
 
@@ -332,16 +367,16 @@ func (gen *CodeGenerator) GoGroup(v *Group) {
 	if len(fields) > 0 {
 		gen.StructAST[v.Name] = " struct {\n" + strings.Join(fields, "\n") + "\n}\n"
 	} else {
-		gen.StructAST[v.Name] = " interface{}\n"
+		gen.StructAST[v.Name] = interfaceType
 	}
 
-	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 }
 
 // GoAttributeGroup generates code for attribute group XML schema in Go language
 // syntax.
 func (gen *CodeGenerator) GoAttributeGroup(v *AttributeGroup) {
-	if _, ok := gen.StructAST[v.Name]; ok {
+	if gen.seen(v.Name) {
 		return
 	}
 
@@ -359,7 +394,7 @@ func (gen *CodeGenerator) GoAttributeGroup(v *AttributeGroup) {
 			optional = omitEmpty
 		}
 		fields = append(fields, fmt.Sprintf(
-			"\t%sAttr\t%s\t`xml:\"%s,attr%s\"`",
+			"\t%s\t%s\t`xml:\"%s,attr%s\"`",
 			genGoFieldName(attribute.Name, false),
 			genGoFieldType(getBaseFromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree)),
 			attribute.Name,
@@ -370,39 +405,52 @@ func (gen *CodeGenerator) GoAttributeGroup(v *AttributeGroup) {
 	if len(fields) > 0 {
 		gen.StructAST[v.Name] = " struct {\n" + strings.Join(fields, "\n") + "\n}\n"
 	} else {
-		gen.StructAST[v.Name] = " interface{}\n"
+		gen.StructAST[v.Name] = interfaceType
 	}
 
-	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 }
 
 // GoElement generates code for element XML schema in Go language syntax.
 func (gen *CodeGenerator) GoElement(v *Element) {
-	if _, ok := gen.StructAST[v.Name]; ok {
+	if gen.seen(v.Name) {
 		return
 	}
-	var plural string
-	if v.Plural {
-		plural = "[]"
+
+	if v.Name == v.Type {
+		return
 	}
-	content := fmt.Sprintf("\t%s%s\n", plural, genGoFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree)))
-	gen.StructAST[v.Name] = content
+
+	gen.StructAST[v.Name] = fmt.Sprintf(
+		"\t%s%s\n",
+		plural(v.Plural),
+		genGoFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree)),
+	)
+
 	fieldName := genGoFieldName(v.Name, false)
-	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+
+	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 }
 
 // GoAttribute generates code for attribute XML schema in Go language syntax.
 func (gen *CodeGenerator) GoAttribute(v *Attribute) {
-	if _, ok := gen.StructAST[v.Name]; ok {
+	if gen.seen(v.Name) {
 		return
 	}
 
-	var plural string
-	if v.Plural {
-		plural = "[]"
-	}
+	gen.StructAST[v.Name] = fmt.Sprintf(
+		"\t%s%s\n",
+		plural(v.Plural),
+		genGoFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree)),
+	)
 
-	gen.StructAST[v.Name] = fmt.Sprintf("\t%s%s\n", plural, genGoFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree)))
 	fieldName := genGoFieldName(v.Name, true)
-	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+
+	gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
+}
+
+func (gen *CodeGenerator) seen(name string) bool {
+	_, ok := gen.StructAST[name]
+
+	return ok
 }

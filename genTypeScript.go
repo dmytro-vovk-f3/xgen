@@ -93,7 +93,7 @@ func (gen *CodeGenerator) TypeScriptSimpleType(v *SimpleType) {
 			content := fmt.Sprintf(" = %s;\n", fieldType)
 			gen.StructAST[v.Name] = content
 			fieldName := genTypeScriptFieldName(v.Name, true)
-			gen.Field += fmt.Sprintf("%sexport type %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+			gen.Field += fmt.Sprintf("%sexport type %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 			return
 		}
 	}
@@ -112,7 +112,7 @@ func (gen *CodeGenerator) TypeScriptSimpleType(v *SimpleType) {
 			content += "}\n"
 			gen.StructAST[v.Name] = content
 			fieldName := genTypeScriptFieldName(v.Name, true)
-			gen.Field += fmt.Sprintf("%sexport class %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+			gen.Field += fmt.Sprintf("%sexport class %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 		}
 		return
 	}
@@ -130,14 +130,14 @@ func (gen *CodeGenerator) TypeScriptSimpleType(v *SimpleType) {
 			}
 		}
 		fieldName := genTypeScriptFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%sexport enum %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, content)
+		gen.Field += fmt.Sprintf("%sexport enum %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, content)
 		return
 	}
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		content := fmt.Sprintf(" %s;\n", genTypeScriptFieldType(getBaseFromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree), false))
 		gen.StructAST[v.Name] = content
 		fieldName := genTypeScriptFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%sexport type %s =%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%sexport type %s =%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -182,7 +182,7 @@ func (gen *CodeGenerator) TypeScriptComplexType(v *ComplexType) {
 			typeExtension = fmt.Sprintf(" extends %s ", fieldType)
 		}
 
-		gen.Field += fmt.Sprintf("%sexport class %s%s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, typeExtension, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%sexport class %s%s%s", genFieldComment(fieldName, v.Doc), fieldName, typeExtension, gen.StructAST[v.Name])
 	}
 }
 
@@ -206,7 +206,7 @@ func (gen *CodeGenerator) TypeScriptGroup(v *Group) {
 		content += "}\n"
 		gen.StructAST[v.Name] = content
 		fieldName := genTypeScriptFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%sexport class %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%sexport class %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -225,7 +225,7 @@ func (gen *CodeGenerator) TypeScriptAttributeGroup(v *AttributeGroup) {
 		content += "}\n"
 		gen.StructAST[v.Name] = content
 		fieldName := genTypeScriptFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%sexport class %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%sexport class %s%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -234,7 +234,7 @@ func (gen *CodeGenerator) TypeScriptElement(v *Element) {
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		gen.StructAST[v.Name] = fmt.Sprintf(" %s;\n", genTypeScriptFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree), v.Plural))
 		fieldName := genTypeScriptFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%sexport type %s =%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%sexport type %s =%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -243,6 +243,6 @@ func (gen *CodeGenerator) TypeScriptAttribute(v *Attribute) {
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		gen.StructAST[v.Name] = fmt.Sprintf(" %s;\n", genTypeScriptFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree), v.Plural))
 		fieldName := genTypeScriptFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%sexport type %s =%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%sexport type %s =%s", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }

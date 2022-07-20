@@ -178,7 +178,7 @@ func (gen *CodeGenerator) RustSimpleType(v *SimpleType) {
 			content := fmt.Sprintf("\t#[serde(rename = \"%s\")]\n\tpub %s: Vec<%s>,\n", v.Name, genRustFieldName(v.Name), fieldType)
 			gen.StructAST[v.Name] = content
 			fieldName := genRustStructName(v.Name, true)
-			gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+			gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 			return
 		}
 	}
@@ -204,7 +204,7 @@ func (gen *CodeGenerator) RustSimpleType(v *SimpleType) {
 		content := fmt.Sprintf("\t#[serde(rename = \"%s\")]\n\tpub %s: %s,\n", v.Name, genRustFieldName(v.Name), fieldType)
 		gen.StructAST[v.Name] = content
 		fieldName := genRustStructName(v.Name, true)
-		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -259,7 +259,7 @@ func (gen *CodeGenerator) RustComplexType(v *ComplexType) {
 		}
 		gen.StructAST[v.Name] = content
 		fieldName := genRustStructName(v.Name, true)
-		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -292,7 +292,7 @@ func (gen *CodeGenerator) RustGroup(v *Group) {
 		}
 		gen.StructAST[v.Name] = content
 		fieldName := genRustStructName(v.Name, true)
-		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -310,7 +310,7 @@ func (gen *CodeGenerator) RustAttributeGroup(v *AttributeGroup) {
 		}
 		gen.StructAST[v.Name] = content
 		fieldName := genRustStructName(v.Name, true)
-		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -324,7 +324,7 @@ func (gen *CodeGenerator) RustElement(v *Element) {
 		} else {
 			gen.StructAST[v.Name] = fmt.Sprintf("\t#[serde(rename = \"%s\")]\n\tpub %s: %s,\n", v.Name, fieldName, fieldType)
 		}
-		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }
 
@@ -338,6 +338,6 @@ func (gen *CodeGenerator) RustAttribute(v *Attribute) {
 		} else {
 			gen.StructAST[v.Name] = fmt.Sprintf("\t#[serde(rename = \"%s\")]\n\tpub %s: %s,\n", v.Name, fieldName, fieldType)
 		}
-		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("\n%s#[derive(Debug, Deserialize, Serialize, PartialEq)]\npub struct %s {\n%s}\n", genFieldComment(fieldName, v.Doc), fieldName, gen.StructAST[v.Name])
 	}
 }

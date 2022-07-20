@@ -43,15 +43,21 @@ func (gen *CodeGenerator) GenC() error {
 			continue
 		}
 		funcName := fmt.Sprintf("C%s", reflect.TypeOf(ele).String()[6:])
-		callFuncByName(gen, funcName, []reflect.Value{reflect.ValueOf(ele)})
+		if err := callFuncByName(gen, funcName, []reflect.Value{reflect.ValueOf(ele)}); err != nil {
+			panic(err)
+		}
 	}
+
 	f, err := os.Create(gen.File + ".h")
 	if err != nil {
 		return err
 	}
+
 	defer f.Close()
+
 	source := []byte(fmt.Sprintf("%s\n%s", copyright, gen.Field))
-	f.Write(source)
+
+	_, err = f.Write(source)
 	return err
 }
 
@@ -105,7 +111,7 @@ func (gen *CodeGenerator) CSimpleType(v *SimpleType) {
 			content := fmt.Sprintf("%s %s[];\n", genCFieldType(fieldType), genCFieldName(v.Name, false))
 			gen.StructAST[v.Name] = content
 			fieldName := genCFieldName(v.Name, true)
-			gen.Field += fmt.Sprintf("%stypedef %s", genFieldComment(fieldName, v.Doc, "//"), gen.StructAST[v.Name])
+			gen.Field += fmt.Sprintf("%stypedef %s", genFieldComment(fieldName, v.Doc), gen.StructAST[v.Name])
 			return
 		}
 	}
@@ -129,7 +135,7 @@ func (gen *CodeGenerator) CSimpleType(v *SimpleType) {
 			content += "}"
 			gen.StructAST[v.Name] = content
 			fieldName := genCFieldName(v.Name, true)
-			gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc, "//"), gen.StructAST[v.Name], fieldName)
+			gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc), gen.StructAST[v.Name], fieldName)
 		}
 		return
 	}
@@ -141,7 +147,7 @@ func (gen *CodeGenerator) CSimpleType(v *SimpleType) {
 		}
 		gen.StructAST[v.Name] = fmt.Sprintf("%s %s%s", fieldType, genCFieldName(v.Name, false), plural)
 		fieldName := genCFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%stypedef %s;\n", genFieldComment(fieldName, v.Doc, "//"), gen.StructAST[v.Name])
+		gen.Field += fmt.Sprintf("%stypedef %s;\n", genFieldComment(fieldName, v.Doc), gen.StructAST[v.Name])
 	}
 }
 
@@ -189,7 +195,7 @@ func (gen *CodeGenerator) CComplexType(v *ComplexType) {
 		content += "}"
 		gen.StructAST[v.Name] = content
 		fieldName := genCFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc, "//"), gen.StructAST[v.Name], fieldName)
+		gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc), gen.StructAST[v.Name], fieldName)
 	}
 }
 
@@ -216,7 +222,7 @@ func (gen *CodeGenerator) CGroup(v *Group) {
 		content += "}"
 		gen.StructAST[v.Name] = content
 		fieldName := genCFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc, "//"), gen.StructAST[v.Name], fieldName)
+		gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc), gen.StructAST[v.Name], fieldName)
 	}
 }
 
@@ -239,7 +245,7 @@ func (gen *CodeGenerator) CAttributeGroup(v *AttributeGroup) {
 		content += "}"
 		gen.StructAST[v.Name] = content
 		fieldName := genCFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc, "//"), gen.StructAST[v.Name], fieldName)
+		gen.Field += fmt.Sprintf("%stypedef %s %s;\n", genFieldComment(fieldName, v.Doc), gen.StructAST[v.Name], fieldName)
 	}
 }
 
@@ -258,14 +264,18 @@ func (gen *CodeGenerator) CElement(v *Element) {
 
 // CAttribute generates code for attribute XML schema in C language syntax.
 func (gen *CodeGenerator) CAttribute(v *Attribute) {
-	if _, ok := gen.StructAST[v.Name]; !ok {
+	if !gen.seen(v.Name) {
 		var plural, fieldType string
 		var ok bool
+
 		if fieldType, ok = innerArray(genCFieldType(getBaseFromSimpleType(trimNSPrefix(v.Type), gen.ProtoTree))); ok || v.Plural {
 			plural = "[]"
 		}
+
 		gen.StructAST[v.Name] = fmt.Sprintf("%s %s%s", fieldType, genCFieldName(v.Name, false), plural)
+
 		fieldName := genCFieldName(v.Name, true)
-		gen.Field += fmt.Sprintf("%stypedef %s;\n", genFieldComment(fieldName, v.Doc, "//"), gen.StructAST[v.Name])
+
+		gen.Field += fmt.Sprintf("%stypedef %s;\n", genFieldComment(fieldName, v.Doc), gen.StructAST[v.Name])
 	}
 }
