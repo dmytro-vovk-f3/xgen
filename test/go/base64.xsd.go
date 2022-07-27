@@ -46,7 +46,9 @@ type TopLevel struct {
 	LastUpdated string    `xml:"LastUpdated,attr,omitempty"`
 	Nested      *MyType7  `xml:"nested,omitempty"`
 	Nested2     MyType7   `xml:"nested2"`
-	MyType1     [][]byte  `xml:"myType1"`
-	MyType2     []MyType2 `xml:"myType2"`
+	MyType1     [][]byte  `xml:"myType1,omitempty"`
+	MyType2     []MyType2 `xml:"myType2,omitempty"`
+	MyString    *string   `xml:"myString,omitempty"`
+	MyInt       *int      `xml:"myInt,omitempty"`
 	*MyType6
 }

@@ -10,8 +10,6 @@ package xgen
 
 import (
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -236,25 +234,6 @@ func isValidURL(toTest string) bool {
 	return true
 }
 
-func fetchSchema(URL string) ([]byte, error) {
-	var body []byte
-	var client http.Client
-	var err error
-	resp, err := client.Get(URL)
-	if err != nil {
-		return body, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode == http.StatusOK {
-		body, err = ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return body, err
-		}
-	}
-	return body, err
-}
-
 func genFieldComment(name, doc string) string {
 	if doc == "" {
 		return fmt.Sprintf("\n// %s ...\n", name)
@@ -272,7 +251,8 @@ type kvPair struct {
 	value string
 }
 
-// kvPairList adapted from Andrew Gerrand for a similar problem (sorted map): https://groups.google.com/forum/#!topic/golang-nuts/FT7cjmcL7gw
+// kvPairList adapted from Andrew Gerrand for a similar problem (sorted map):
+// https://groups.google.com/forum/#!topic/golang-nuts/FT7cjmcL7gw
 type kvPairList []kvPair
 
 func (k kvPairList) Len() int { return len(k) }

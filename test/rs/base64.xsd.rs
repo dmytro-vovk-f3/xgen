@@ -91,6 +91,10 @@ pub struct TopLevel {
 	pub my_type1: Vec<String>,
 	#[serde(rename = "myType2")]
 	pub my_type2: Vec<MyType2>,
+	#[serde(rename = "myString")]
+	pub my_string: String,
+	#[serde(rename = "myInt")]
+	pub my_int: i32,
 	#[serde(flatten)]
 	pub my_type6: MyType6,
 }

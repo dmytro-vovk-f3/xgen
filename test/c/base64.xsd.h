@@ -42,4 +42,6 @@ typedef struct {
 	MyType7 Nested2;
 	char MyType1[];
 	MyType2 MyType2[];
+	char MyString;
+	int MyInt;
 } TopLevel;

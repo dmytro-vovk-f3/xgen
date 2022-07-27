@@ -45,4 +45,6 @@ export class TopLevel extends MyType6  {
 	Nested2: MyType7;
 	MyType1: Uint8Array;
 	MyType2: Array<MyType2>;
+	MyString: string;
+	MyInt: number;
 }

@@ -11,6 +11,7 @@ package xgen
 import (
 	"encoding/xml"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -109,12 +110,18 @@ func (opt *Options) Parse() (err error) {
 		case xml.StartElement:
 			opt.InElement = element.Name.Local
 			funcName := fmt.Sprintf("On%s", MakeFirstUpperCase(opt.InElement))
-			if err = callFuncByName(opt, funcName, []reflect.Value{reflect.ValueOf(element), reflect.ValueOf(opt.ProtoTree)}); err != nil {
+			if err = callFuncByName(opt, funcName, []reflect.Value{
+				reflect.ValueOf(element),
+				reflect.ValueOf(opt.ProtoTree),
+			}); err != nil {
 				return
 			}
 		case xml.EndElement:
 			funcName := fmt.Sprintf("End%s", MakeFirstUpperCase(element.Name.Local))
-			if err = callFuncByName(opt, funcName, []reflect.Value{reflect.ValueOf(element), reflect.ValueOf(opt.ProtoTree)}); err != nil {
+			if err = callFuncByName(opt, funcName, []reflect.Value{
+				reflect.ValueOf(element),
+				reflect.ValueOf(opt.ProtoTree),
+			}); err != nil {
 				return
 			}
 		case xml.CharData:
@@ -129,9 +136,9 @@ func (opt *Options) Parse() (err error) {
 		opt.ParseFileMap[opt.FilePath] = opt.ProtoTree
 		path := filepath.Join(opt.OutputDir, strings.TrimPrefix(opt.FilePath, opt.InputDir))
 		if err := PrepareOutputDir(filepath.Dir(path)); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			log.Fatal(err)
 		}
+
 		generator := &CodeGenerator{
 			Lang:      opt.Lang,
 			Package:   opt.Package,

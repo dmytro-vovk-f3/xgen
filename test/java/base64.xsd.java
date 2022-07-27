@@ -82,4 +82,8 @@ public class TopLevel extends MyType6  {
 	protected List<List<Byte>> MyType1;
 	@XmlElement(required = true, name = "myType2")
 	protected List<MyType2> MyType2;
+	@XmlElement(required = true, name = "myString")
+	protected String MyString;
+	@XmlElement(required = true, name = "myInt")
+	protected Integer MyInt;
 }

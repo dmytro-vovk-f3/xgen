@@ -280,7 +280,9 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 		)
 
 		if element.Nillable {
-			typePrefix = "*"
+			if !element.Plural {
+				typePrefix = "*"
+			}
 			tagSuffix = ",omitempty"
 		}
 

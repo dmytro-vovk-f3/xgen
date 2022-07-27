@@ -13,18 +13,24 @@ import (
 	"strconv"
 )
 
+const (
+	maxOccurs = "maxOccurs"
+	unbounded = "unbounded"
+)
+
 // OnChoice handles parsing event on the choice start elements. The
 // choice element defines that one and only one of the contained element can be present within
 // the contained element.
-func (opt *Options) OnChoice(ele xml.StartElement, protoTree []interface{}) (err error) {
+func (opt *Options) OnChoice(ele xml.StartElement, _ []interface{}) (err error) {
 	choice := Choice{}
+
 	for _, attr := range ele.Attr {
-		if attr.Name.Local == "maxOccurs" {
+		if attr.Name.Local == maxOccurs {
 			var maxOccurs int
-			if maxOccurs, err = strconv.Atoi(attr.Value); attr.Value != "unbounded" && err != nil {
+			if maxOccurs, err = strconv.Atoi(attr.Value); attr.Value != unbounded && err != nil {
 				return
 			}
-			if attr.Value == "unbounded" || maxOccurs > 1 {
+			if attr.Value == unbounded || maxOccurs > 1 {
 				choice.Plural, err = true, nil
 			} else {
 				choice.Plural, err = false, nil
@@ -42,7 +48,7 @@ func (opt *Options) OnChoice(ele xml.StartElement, protoTree []interface{}) (err
 }
 
 // EndChoice handles parsing event on the choice end elements.
-func (opt *Options) EndChoice(ele xml.EndElement, protoTree []interface{}) (err error) {
+func (opt *Options) EndChoice(xml.EndElement, []interface{}) (err error) {
 	opt.Choice.Pop()
 
 	return

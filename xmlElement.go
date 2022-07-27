@@ -65,6 +65,7 @@ func (opt *Options) OnElement(ele xml.StartElement, protoTree []interface{}) (er
 
 	if opt.Choice.Len() > 0 {
 		e.Plural = e.Plural || opt.Choice.Peek().(*Choice).Plural
+		e.Nillable = true
 	}
 
 	if opt.ComplexType.Len() > 0 {
@@ -93,6 +94,7 @@ func (opt *Options) OnElement(ele xml.StartElement, protoTree []interface{}) (er
 	}
 
 	opt.Element.Push(&e)
+
 	return
 }
 
