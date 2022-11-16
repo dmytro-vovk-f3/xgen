@@ -35,11 +35,12 @@ import (
 // Config holds user-defined overrides and filters that are used when
 // generating source code from an XSD document.
 type Config struct {
-	I       string
-	O       string
-	Pkg     string
-	Lang    string
-	Version string
+	I            string
+	O            string
+	Pkg          string
+	Lang         string
+	Version      string
+	SkipXMLNames bool
 }
 
 // Cfg are the default config for xgen. The default package name and output
@@ -64,6 +65,7 @@ func parseFlags() *Config {
 	oPtr := flag.String("o", "xgen_out", "Output file path or directory for the generated code")
 	pkgPtr := flag.String("p", "", "Specify the package name")
 	langPtr := flag.String("l", "", "Specify the language of generated code")
+	skipXmlNames := flag.Bool("s", false, "Omit generating xml names")
 	verPtr := flag.Bool("v", false, "Show version and exit")
 	helpPtr := flag.Bool("h", false, "Show this help and exit")
 	flag.Parse()
@@ -95,6 +97,7 @@ func parseFlags() *Config {
 	if *pkgPtr != "" {
 		Cfg.Pkg = *pkgPtr
 	}
+	Cfg.SkipXMLNames = *skipXmlNames
 	return &Cfg
 }
 
@@ -116,6 +119,7 @@ func main() {
 			OutputDir:           cfg.O,
 			Lang:                cfg.Lang,
 			Package:             cfg.Pkg,
+			SkipXMLNames:        cfg.SkipXMLNames,
 			IncludeMap:          make(map[string]bool),
 			LocalNameNSMap:      make(map[string]string),
 			NSSchemaLocationMap: make(map[string]string),

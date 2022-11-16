@@ -32,6 +32,7 @@ type CodeGenerator struct {
 	Package           string
 	ImportTime        bool // For Go language
 	ImportEncodingXML bool // For Go language
+	SkipXMLNames      bool
 	ProtoTree         []interface{}
 	StructAST         map[string]string
 }
@@ -190,7 +191,8 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 
 		var fields []string
 		fieldName := genGoFieldName(v.Name, true)
-		if fieldName != v.Name {
+
+		if !gen.SkipXMLNames && fieldName != v.Name {
 			gen.ImportEncodingXML = true
 			fields = append(fields, fmt.Sprintf("\tXMLName\txml.Name\t`xml:\"%s\"`", v.Name))
 		}
@@ -233,7 +235,7 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 	var fields []string
 	fieldName := genGoFieldName(v.Name, true)
 
-	if fieldName != v.Name {
+	if !gen.SkipXMLNames && fieldName != v.Name {
 		gen.ImportEncodingXML = true
 		fields = append(fields, fmt.Sprintf("\tXMLName\txml.Name\t`xml:\"%s\"`", v.Name))
 	}
@@ -336,10 +338,12 @@ func (gen *CodeGenerator) GoGroup(v *Group) {
 	var fields []string
 
 	fieldName := genGoFieldName(v.Name, true)
-	if fieldName != v.Name {
+
+	if !gen.SkipXMLNames && fieldName != v.Name {
 		gen.ImportEncodingXML = true
 		fields = append(fields, fmt.Sprintf("\tXMLName\txml.Name\t`xml:\"%s\"`", v.Name))
 	}
+
 	for _, element := range v.Elements {
 		var plural string
 		if element.Plural {
@@ -385,7 +389,8 @@ func (gen *CodeGenerator) GoAttributeGroup(v *AttributeGroup) {
 	var fields []string
 
 	fieldName := genGoFieldName(v.Name, true)
-	if fieldName != v.Name {
+
+	if !gen.SkipXMLNames && fieldName != v.Name {
 		gen.ImportEncodingXML = true
 		fields = append(fields, fmt.Sprintf("\tXMLName\txml.Name\t`xml:\"%s\"`", v.Name))
 	}

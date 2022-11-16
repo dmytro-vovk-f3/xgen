@@ -43,6 +43,7 @@ type Options struct {
 	InGroup          int
 	InUnion          bool
 	InAttributeGroup bool
+	SkipXMLNames     bool
 
 	SimpleType     *Stack
 	ComplexType    *Stack
@@ -140,11 +141,12 @@ func (opt *Options) Parse() (err error) {
 		}
 
 		generator := &CodeGenerator{
-			Lang:      opt.Lang,
-			Package:   opt.Package,
-			File:      path,
-			ProtoTree: opt.ProtoTree,
-			StructAST: map[string]string{},
+			Lang:         opt.Lang,
+			Package:      opt.Package,
+			File:         path,
+			ProtoTree:    opt.ProtoTree,
+			StructAST:    map[string]string{},
+			SkipXMLNames: opt.SkipXMLNames,
 		}
 		funcName := fmt.Sprintf("Gen%s", MakeFirstUpperCase(opt.Lang))
 		if err = callFuncByName(generator, funcName, []reflect.Value{}); err != nil {
