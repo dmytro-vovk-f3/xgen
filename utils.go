@@ -240,7 +240,7 @@ func genFieldComment(name, doc string) string {
 	}
 
 	return fmt.Sprintf(
-		"\n// %s is %s\n",
+		"\n// %s - %s\n",
 		name,
 		strings.NewReplacer("\n", fmt.Sprintf("\n%s ", "//"), "\t", "").Replace(doc),
 	)
