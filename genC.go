@@ -48,7 +48,7 @@ func (gen *CodeGenerator) GenC() error {
 		}
 	}
 
-	f, err := os.Create(gen.File + ".h")
+	f, err := os.Create(gen.FileWithExtension(".h"))
 	if err != nil {
 		return err
 	}

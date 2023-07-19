@@ -6,11 +6,14 @@ import (
 	"encoding/xml"
 )
 
+// MyType1 ...
+type MyType1 string
+
 // MyType2 ...
 type MyType2 struct {
 	XMLName xml.Name `xml:"myType2"`
 	Length  int      `xml:"length,attr,omitempty"`
-	Value   []byte   `xml:",chardata"`
+	Value   string   `xml:",chardata"`
 }
 
 // MyType3 ...
@@ -24,7 +27,7 @@ type MyType3 struct {
 type MyType4 struct {
 	XMLName   xml.Name `xml:"myType4"`
 	Title     string   `xml:"title"`
-	Blob      []byte   `xml:"blob"`
+	Blob      string   `xml:"blob"`
 	Timestamp string   `xml:"timestamp"`
 }
 
@@ -46,7 +49,7 @@ type TopLevel struct {
 	LastUpdated string    `xml:"LastUpdated,attr,omitempty"`
 	Nested      *MyType7  `xml:"nested,omitempty"`
 	Nested2     MyType7   `xml:"nested2"`
-	MyType1     [][]byte  `xml:"myType1,omitempty"`
+	MyType1     []string  `xml:"myType1,omitempty"`
 	MyType2     []MyType2 `xml:"myType2,omitempty"`
 	MyString    *string   `xml:"myString,omitempty"`
 	MyInt       *int      `xml:"myInt,omitempty"`

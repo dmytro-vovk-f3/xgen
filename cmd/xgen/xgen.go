@@ -1,4 +1,4 @@
-// Copyright 2020 - 2021 The xgen Authors. All rights reserved. Use of this
+// Copyright 2020 - 2022 The xgen Authors. All rights reserved. Use of this
 // source code is governed by a BSD-style license that can be found in the
 // LICENSE file.
 //
@@ -70,7 +70,7 @@ func parseFlags() *Config {
 	helpPtr := flag.Bool("h", false, "Show this help and exit")
 	flag.Parse()
 	if *helpPtr {
-		fmt.Printf("xgen version: %s\nCopyright (c) 2020 - 2021 Ri Xu https://xuri.me All rights reserved.\n\nUsage:\n$ xgen [<flag> ...] <XSD file or directory> ...\n  -i <path>\tInput file path or directory for the XML schema definition\n  -o <path>\tOutput file path or directory for the generated code\n  -p     \tSpecify the package name\n  -l      \tSpecify the language of generated code (Go/C/Java/Rust/TypeScript)\n  -h     \tOutput this help and exit\n  -v     \tOutput version and exit\n", Cfg.Version)
+		fmt.Printf("xgen version: %s\nCopyright (c) 2020 - 2022 Ri Xu https://xuri.me All rights reserved.\n\nUsage:\n$ xgen [<flag> ...] <XSD file or directory> ...\n  -i <path>\tInput file path or directory for the XML schema definition\n  -o <path>\tOutput file path or directory for the generated code\n  -p     \tSpecify the package name\n  -l      \tSpecify the language of generated code (Go/C/Java/Rust/TypeScript)\n  -h     \tOutput this help and exit\n  -v     \tOutput version and exit\n", Cfg.Version)
 		os.Exit(0)
 	}
 	if *verPtr {
@@ -103,10 +103,6 @@ func parseFlags() *Config {
 
 func main() {
 	cfg := parseFlags()
-	if err := xgen.PrepareOutputDir(cfg.O); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
 	files, err := xgen.GetFileList(cfg.I)
 	if err != nil {
 		fmt.Println(err)
