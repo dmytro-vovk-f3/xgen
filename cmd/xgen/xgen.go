@@ -91,7 +91,7 @@ func parseFlags() *Config {
 		Cfg.O = *oPtr
 	}
 	if ok := SupportLang[Cfg.Lang]; !ok {
-		fmt.Println("unsupport language", Cfg.Lang)
+		fmt.Println("unsupported language", Cfg.Lang)
 		os.Exit(1)
 	}
 	if *pkgPtr != "" {
@@ -118,6 +118,7 @@ func main() {
 			SkipXMLNames:        cfg.SkipXMLNames,
 			IncludeMap:          make(map[string]bool),
 			LocalNameNSMap:      make(map[string]string),
+			NSAliases:           make(map[string]string),
 			NSSchemaLocationMap: make(map[string]string),
 			ParseFileList:       make(map[string]bool),
 			ParseFileMap:        make(map[string][]interface{}),

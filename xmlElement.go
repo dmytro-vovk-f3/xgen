@@ -14,8 +14,11 @@ import (
 )
 
 // OnElement handles parsing event on the element start elements.
-func (opt *Options) OnElement(ele xml.StartElement, protoTree []interface{}) (err error) {
-	e := Element{}
+func (opt *Options) OnElement(ele xml.StartElement, protoTree []any) (err error) {
+	e := Element{
+		NSPrefix: opt.CurrentSchemaNS,
+	}
+
 	for _, attr := range ele.Attr {
 		if attr.Name.Local == "ref" {
 			e.Name = attr.Value
@@ -28,17 +31,24 @@ func (opt *Options) OnElement(ele xml.StartElement, protoTree []interface{}) (er
 		if attr.Name.Local == "name" {
 			e.Name = attr.Value
 		}
+
 		if attr.Name.Local == "type" {
 			e.Type, err = opt.GetValueType(attr.Value, protoTree)
 			if err != nil {
 				return
 			}
 		}
+
 		if attr.Name.Local == "minOccurs" {
 			if attr.Value == "0" {
 				e.Nillable = true
 			}
 		}
+
+		if attr.Name.Local == "nillable" && attr.Value == "true" {
+			e.Nillable = true
+		}
+
 		if attr.Name.Local == "maxOccurs" {
 			var maxOccurs int
 			if maxOccurs, err = strconv.Atoi(attr.Value); attr.Value != "unbounded" && err != nil {
@@ -48,6 +58,7 @@ func (opt *Options) OnElement(ele xml.StartElement, protoTree []interface{}) (er
 				e.Plural, err = true, nil
 			}
 		}
+
 		if attr.Name.Local == "unbounded" {
 			if attr.Value != "0" {
 				e.Plural = true

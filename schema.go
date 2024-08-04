@@ -8,12 +8,26 @@
 
 package xgen
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"fmt"
+	"log"
+)
 
 func (opt *Options) prepareLocalNameNSMap(element xml.StartElement) {
+	opt.CurrentSchemaNS = ""
+
 	for _, ele := range element.Attr {
 		if ele.Name.Space == "xmlns" {
 			opt.LocalNameNSMap[ele.Name.Local] = ele.Value
+		}
+
+		if ele.Name.Local == "targetNamespace" {
+			if _, ok := opt.NSAliases[ele.Value]; !ok {
+				opt.NSAliases[ele.Value] = fmt.Sprintf("ns%d", len(opt.NSAliases)+1)
+				log.Printf("xmlns:%s=%q", opt.NSAliases[ele.Value], ele.Value)
+			}
+			opt.CurrentSchemaNS = opt.NSAliases[ele.Value]
 		}
 	}
 }

@@ -33,6 +33,7 @@ type SimpleType struct {
 // https://www.w3.org/TR/xmlschema-1/#cElement_Declarations
 type Element struct {
 	Doc      string
+	NSPrefix string
 	Name     string
 	Wildcard bool
 	Type     string
@@ -102,9 +103,9 @@ type Group struct {
 // define if the elements it contains should be plural or not (as defined by the maxOccurs).
 // https://www.w3.org/TR/xmlschema-1/#Complex_Type_Definition_details
 type Choice struct {
-	ID       string
-	Choice   []Choice
-	Plural   bool
+	ID     string
+	Choice []Choice
+	Plural bool
 }
 
 // AttributeGroup definitions do not participate in ·validation· as such, but

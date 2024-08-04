@@ -293,13 +293,18 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 			gen.ImportTime = true
 		}
 
+		prefix := ""
+		if element.NSPrefix != "" {
+			prefix = element.NSPrefix + ":"
+		}
+
 		fields = append(fields, fmt.Sprintf(
 			"\t%s\t%s%s%s\t`xml:\"%s%s\"`",
 			genGoFieldName(element.Name, false),
 			plural(element.Plural),
 			typePrefix,
 			fieldType,
-			element.Name,
+			prefix+element.Name,
 			tagSuffix,
 		))
 	}

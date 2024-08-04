@@ -1,0 +1,2744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="Service1" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+                  xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/"
+                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsp:Policy wsu:Id="BasicHttpBinding_IService11_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false"/>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsdl:types>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:import namespace="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+            <xs:import namespace="http://schemas.datacontract.org/2004/07/GXSV"/>
+            <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xs:element name="AddRecord">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q1:Logon"
+                                    xmlns:q1="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="bEchoRecord" nillable="true" type="xs:boolean"/>
+                        <xs:element name="strEchoedRecord" nillable="true" type="xs:string"/>
+                        <xs:element name="nNewID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddRecordResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="AddRecordResult" type="xs:boolean"/>
+                        <xs:element name="strEchoedRecord" nillable="true" type="xs:string"/>
+                        <xs:element name="nNewID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddRecordSC">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q2:Logon"
+                                    xmlns:q2="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="bEchoRecord" nillable="true" type="xs:boolean"/>
+                        <xs:element name="strEchoedRecord" nillable="true" type="xs:string"/>
+                        <xs:element name="nNewID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddRecordSCResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="AddRecordSCResult" type="xs:boolean"/>
+                        <xs:element name="strEchoedRecord" nillable="true" type="xs:string"/>
+                        <xs:element name="nNewID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateRecord">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q3:Logon"
+                                    xmlns:q3="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nParentID" type="xs:long"/>
+                        <xs:element name="nRecordID" type="xs:long"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="bEchoRecord" nillable="true" type="xs:boolean"/>
+                        <xs:element name="strEchoedRecord" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateRecordResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="UpdateRecordResult" type="xs:boolean"/>
+                        <xs:element name="strEchoedRecord" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetRecord">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q4:Logon"
+                                    xmlns:q4="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nParentID" type="xs:long"/>
+                        <xs:element name="nRecordID" type="xs:long"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetRecordResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetRecordResult" type="xs:boolean"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DeleteRecord">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q5:Logon"
+                                    xmlns:q5="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nParentID" type="xs:long"/>
+                        <xs:element name="nRecordID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DeleteRecordResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="DeleteRecordResult" type="xs:boolean"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ListRecords">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q6:Logon"
+                                    xmlns:q6="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nParentID" type="xs:long"/>
+                        <xs:element name="nStart" type="xs:long"/>
+                        <xs:element name="nNumberOfRows" type="xs:long"/>
+                        <xs:element name="nRecordGroup" type="xs:long"/>
+                        <xs:element name="nReserved" type="xs:long"/>
+                        <xs:element name="bAtStart" type="xs:boolean"/>
+                        <xs:element name="bAtEnd" type="xs:boolean"/>
+                        <xs:element name="RData" nillable="true" type="q7:DeviceNames"
+                                    xmlns:q7="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ListRecordsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ListRecordsResult" type="xs:boolean"/>
+                        <xs:element name="bAtStart" type="xs:boolean"/>
+                        <xs:element name="bAtEnd" type="xs:boolean"/>
+                        <xs:element name="RData" nillable="true" type="q8:DeviceNames"
+                                    xmlns:q8="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="EventReportByRecordGroup">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q9:Logon"
+                                    xmlns:q9="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:int"/>
+                        <xs:element name="nRecordGroup" type="xs:int"/>
+                        <xs:element name="nStart" type="xs:long"/>
+                        <xs:element name="nNumberOfRows" type="xs:long"/>
+                        <xs:element name="nLanguage" type="xs:int"/>
+                        <xs:element name="strStartDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseStartDate" type="xs:boolean"/>
+                        <xs:element name="strEndDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseEndDate" type="xs:boolean"/>
+                        <xs:element name="Names" nillable="true" type="q10:ReportDataCollection"
+                                    xmlns:q10="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:int"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="EventReportByRecordGroupResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="EventReportByRecordGroupResult" type="xs:boolean"/>
+                        <xs:element name="Names" nillable="true" type="q11:ReportDataCollection"
+                                    xmlns:q11="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:int"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="EventReportByUser">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q12:Logon"
+                                    xmlns:q12="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:int"/>
+                        <xs:element name="nUserID" type="xs:int"/>
+                        <xs:element name="nStart" type="xs:long"/>
+                        <xs:element name="nNumberOfRows" type="xs:long"/>
+                        <xs:element name="nLanguage" type="xs:int"/>
+                        <xs:element name="strStartDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseStartDate" type="xs:boolean"/>
+                        <xs:element name="strEndDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseEndDate" type="xs:boolean"/>
+                        <xs:element name="Data" nillable="true" type="q13:ReportDataCollection"
+                                    xmlns:q13="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:int"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="EventReportByUserResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="EventReportByUserResult" type="xs:boolean"/>
+                        <xs:element name="Data" nillable="true" type="q14:ReportDataCollection"
+                                    xmlns:q14="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:int"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetCurrentLogon">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetCurrentLogonResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetCurrentLogonResult" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetLogon">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q15:LogonData"
+                                    xmlns:q15="http://schemas.datacontract.org/2004/07/GXSV"/>
+                        <xs:element name="L" nillable="true" type="q16:Logon"
+                                    xmlns:q16="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetLogonResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q17:LogonData"
+                                    xmlns:q17="http://schemas.datacontract.org/2004/07/GXSV"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TestMainDatabaseConnection">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="strError" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TestMainDatabaseConnectionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="TestMainDatabaseConnectionResult" type="xs:boolean"/>
+                        <xs:element name="strError" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TestEventDatabaseConnection">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="strError" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TestEventDatabaseConnectionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="TestEventDatabaseConnectionResult" type="xs:boolean"/>
+                        <xs:element name="strError" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetDeviceStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q18:Logon"
+                                    xmlns:q18="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nType" type="xs:long"/>
+                        <xs:element name="nAddress" type="xs:long"/>
+                        <xs:element name="nAddress2" type="xs:long"/>
+                        <xs:element name="nStatus1" type="xs:long"/>
+                        <xs:element name="nStatus2" type="xs:long"/>
+                        <xs:element name="nStatus3" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetDeviceStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetDeviceStatusResult" type="xs:boolean"/>
+                        <xs:element name="nStatus1" type="xs:long"/>
+                        <xs:element name="nStatus2" type="xs:long"/>
+                        <xs:element name="nStatus3" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlFloor">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q19:Logon"
+                                    xmlns:q19="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nElevatorCar" type="xs:long"/>
+                        <xs:element name="nFloorIndex" type="xs:long"/>
+                        <xs:element name="Control" type="q20:MC_FLOOR_CONTROL"
+                                    xmlns:q20="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTime" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlFloorResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlFloorResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlPGM">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q21:Logon"
+                                    xmlns:q21="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nPGMIndex" type="xs:long"/>
+                        <xs:element name="Control" type="q22:MC_PGM_CONTROL"
+                                    xmlns:q22="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTime" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlPGMResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlPGMResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlArea">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q23:Logon"
+                                    xmlns:q23="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nAreaIndex" type="xs:long"/>
+                        <xs:element name="Control" type="q24:MC_AREA_CONTROL"
+                                    xmlns:q24="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlAreaResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlAreaResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlProgFunc">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q25:Logon"
+                                    xmlns:q25="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nDoorIndex" type="xs:long"/>
+                        <xs:element name="Control" type="q26:MC_PROGFUNC_CONTROL"
+                                    xmlns:q26="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlProgFuncResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlProgFuncResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlDoor">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q27:Logon"
+                                    xmlns:q27="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nDoorIndex" type="xs:long"/>
+                        <xs:element name="Control" type="q28:MC_DOOR_CONTROL"
+                                    xmlns:q28="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlDoorResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlDoorResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlZone">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q29:Logon"
+                                    xmlns:q29="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nZoneIndex" type="xs:long"/>
+                        <xs:element name="Control" type="q30:MC_ZONE_CONTROL"
+                                    xmlns:q30="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="ZoneType" type="q31:MC_ZONE_TYPE"
+                                    xmlns:q31="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlZoneResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlZoneResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ModuleCommand">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q32:Logon"
+                                    xmlns:q32="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="Command" type="q33:MC_MODULE_COMMAND"
+                                    xmlns:q33="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="Type" type="q34:MC_MODULE_COMMAND_TYPE"
+                                    xmlns:q34="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nModuleAddress" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ModuleCommandResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ModuleCommandResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlService">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q35:Logon"
+                                    xmlns:q35="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nServiceType" type="xs:long"/>
+                        <xs:element name="nIndex" type="xs:long"/>
+                        <xs:element name="Control" type="q36:MC_SERVICE_CONTROL"
+                                    xmlns:q36="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlServiceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlServiceResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetDateTime">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q37:Logon"
+                                    xmlns:q37="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="dtTime" type="xs:dateTime"/>
+                        <xs:element name="dtUTCTime" type="xs:dateTime"/>
+                        <xs:element name="pCookie" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetDateTimeResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="SetDateTimeResult" type="xs:boolean"/>
+                        <xs:element name="pCookie" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="InitialiseKabaKey">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q38:Logon"
+                                    xmlns:q38="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nUserID" type="xs:long"/>
+                        <xs:element name="sKabaKeyBoxID" nillable="true" type="xs:string"/>
+                        <xs:element name="sFromCaller" nillable="true" type="xs:string"/>
+                        <xs:element name="sKabaKeyID" nillable="true" type="xs:string"/>
+                        <xs:element name="sErrorCode" nillable="true" type="xs:string"/>
+                        <xs:element name="sDescription" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="InitialiseKabaKeyResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="InitialiseKabaKeyResult" type="xs:boolean"/>
+                        <xs:element name="sKabaKeyID" nillable="true" type="xs:string"/>
+                        <xs:element name="sErrorCode" nillable="true" type="xs:string"/>
+                        <xs:element name="sDescription" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlDevice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q39:Logon"
+                                    xmlns:q39="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nControlType" type="xs:long"/>
+                        <xs:element name="nControlIndex" type="xs:long"/>
+                        <xs:element name="nControlOperation" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="list" nillable="true" type="q40:ArrayOflong"
+                                    xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ControlDeviceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ControlDeviceResult" type="xs:boolean"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ResetPassword">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q41:Logon"
+                                    xmlns:q41="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nOperatorID" type="xs:long"/>
+                        <xs:element name="strNew" nillable="true" type="xs:string"/>
+                        <xs:element name="bResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ResetPasswordResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ResetPasswordResult" type="xs:boolean"/>
+                        <xs:element name="bResult" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetStatusListStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q42:Logon"
+                                    xmlns:q42="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="bChangesOnly" type="xs:boolean"/>
+                        <xs:element name="dtCompareRefDate" type="xs:dateTime"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nStatusListID" type="xs:long"/>
+                        <xs:element name="dtRef" type="xs:dateTime"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetStatusListStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetStatusListStatusResult" type="xs:boolean"/>
+                        <xs:element name="dtRef" type="xs:dateTime"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetLatestEvents">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="LD" nillable="true" type="q43:Logon"
+                                    xmlns:q43="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="strWorkStation" nillable="true" type="xs:string"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nReportID" type="xs:long"/>
+                        <xs:element name="nMostRecentCount" type="xs:long"/>
+                        <xs:element name="nLastID" type="xs:long"/>
+                        <xs:element name="nLastAckID" type="xs:long"/>
+                        <xs:element name="strEventReportSettings" nillable="true" type="xs:string"/>
+                        <xs:element name="strEventReportDataCollection" nillable="true" type="xs:string"/>
+                        <xs:element name="strAckReportDataCollection" nillable="true" type="xs:string"/>
+                        <xs:element name="nRecordSetID" type="xs:long"/>
+                        <xs:element name="nNewLastID" type="xs:long"/>
+                        <xs:element name="nNewAckLastID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetLatestEventsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetLatestEventsResult" type="xs:boolean"/>
+                        <xs:element name="strEventReportSettings" nillable="true" type="xs:string"/>
+                        <xs:element name="strEventReportDataCollection" nillable="true" type="xs:string"/>
+                        <xs:element name="strAckReportDataCollection" nillable="true" type="xs:string"/>
+                        <xs:element name="nRecordSetID" type="xs:long"/>
+                        <xs:element name="nNewLastID" type="xs:long"/>
+                        <xs:element name="nNewAckLastID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="RunReportDefaults">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q44:Logon"
+                                    xmlns:q44="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nReportType" type="xs:int"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nID" type="xs:long"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nStart" type="xs:long"/>
+                        <xs:element name="nNumberOfRows" type="xs:long"/>
+                        <xs:element name="strStartDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseStartDate" type="xs:boolean"/>
+                        <xs:element name="strEndDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseEndDate" type="xs:boolean"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                        <xs:element name="deviceReportDetails" type="xs:int"/>
+                        <xs:element name="ControllerID" type="xs:long"/>
+                        <xs:element name="nLanguage" type="xs:int"/>
+                        <xs:element name="nRecordGroup" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="RunReportDefaultsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RunReportDefaultsResult" type="xs:boolean"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="RunReport">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q45:Logon"
+                                    xmlns:q45="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nReportType" type="xs:int"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nID" type="xs:long"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="ControllerID" type="xs:long"/>
+                        <xs:element name="nStart" type="xs:long"/>
+                        <xs:element name="nNumberOfRows" type="xs:long"/>
+                        <xs:element name="nLanguage" type="xs:int"/>
+                        <xs:element name="nRecordGroup" type="xs:long"/>
+                        <xs:element name="strStartDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseStartDate" type="xs:boolean"/>
+                        <xs:element name="strEndDate" nillable="true" type="xs:string"/>
+                        <xs:element name="bUseEndDate" type="xs:boolean"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                        <xs:element name="deviceReportDetails" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="RunReportResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RunReportResult" type="xs:boolean"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FindRecords">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q46:Logon"
+                                    xmlns:q46="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nParent" type="xs:long"/>
+                        <xs:element name="nPage" type="xs:long"/>
+                        <xs:element name="nSortField" type="xs:long"/>
+                        <xs:element name="bSortDirection" type="xs:boolean"/>
+                        <xs:element name="strFieldName" nillable="true" type="xs:string"/>
+                        <xs:element name="bContain" type="xs:boolean"/>
+                        <xs:element name="strSearchString" nillable="true" type="xs:string"/>
+                        <xs:element name="nMinValue" type="xs:long"/>
+                        <xs:element name="nMaxValue" type="xs:long"/>
+                        <xs:element name="startDate" type="xs:dateTime"/>
+                        <xs:element name="endDate" type="xs:dateTime"/>
+                        <xs:element name="list" nillable="true" type="q47:ArrayOflong"
+                                    xmlns:q47="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+                        <xs:element name="bNoMoreRows" type="xs:boolean"/>
+                        <xs:element name="RData" nillable="true" type="q48:DeviceNames"
+                                    xmlns:q48="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nFieldID" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FindRecordsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="FindRecordsResult" type="xs:boolean"/>
+                        <xs:element name="bNoMoreRows" type="xs:boolean"/>
+                        <xs:element name="RData" nillable="true" type="q49:DeviceNames"
+                                    xmlns:q49="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetImageData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q50:Logon"
+                                    xmlns:q50="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nImageID" type="xs:long"/>
+                        <xs:element name="Data" nillable="true" type="q51:CImageData"
+                                    xmlns:q51="http://schemas.datacontract.org/2004/07/GXSV"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetImageDataResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetImageDataResult" type="xs:boolean"/>
+                        <xs:element name="Data" nillable="true" type="q52:CImageData"
+                                    xmlns:q52="http://schemas.datacontract.org/2004/07/GXSV"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetVersion">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q53:Logon"
+                                    xmlns:q53="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="version" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetVersionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetVersionResult" type="xs:boolean"/>
+                        <xs:element name="version" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PrepareEventReport">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q54:Logon"
+                                    xmlns:q54="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nID" type="xs:long"/>
+                        <xs:element name="strStartDate" nillable="true" type="xs:string"/>
+                        <xs:element name="strEndDate" nillable="true" type="xs:string"/>
+                        <xs:element name="nControllerID" nillable="true" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PrepareEventReportResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PrepareEventReportResult" type="xs:boolean"/>
+                        <xs:element name="strReportHandle" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ExecuteEventReport">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q55:Logon"
+                                    xmlns:q55="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="strReportHandle" nillable="true" type="xs:string"/>
+                        <xs:element name="nStartID" nillable="true" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ExecuteEventReportResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ExecuteEventReportResult" type="xs:boolean"/>
+                        <xs:element name="strResultHandle" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetEventReportData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q56:Logon"
+                                    xmlns:q56="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="strResultHandle" nillable="true" type="xs:string"/>
+                        <xs:element name="nNumberOfResults" nillable="true" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetEventReportDataResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetEventReportDataResult" type="xs:boolean"/>
+                        <xs:element name="DataXML" nillable="true" type="xs:string"/>
+                        <xs:element name="WindowInfo" nillable="true" type="q57:EventWindowInformation"
+                                    xmlns:q57="http://schemas.datacontract.org/2004/07/GXSV"/>
+                        <xs:element name="bEndOfData" type="xs:boolean"/>
+                        <xs:element name="bEndOfEvents" type="xs:boolean"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetMostRecentEventID">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q58:Logon"
+                                    xmlns:q58="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetMostRecentEventIDResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetMostRecentEventIDResult" type="xs:boolean"/>
+                        <xs:element name="nMostRecentEventID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetTableSchema">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q59:Logon"
+                                    xmlns:q59="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetTableSchemaResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetTableSchemaResult" type="xs:boolean"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetTableIDNameMapping">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q60:Logon"
+                                    xmlns:q60="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="tableIDMapping" nillable="true"
+                                    type="q61:ArrayOfKeyValueOflongstring"
+                                    xmlns:q61="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetTableIDNameMappingResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetTableIDNameMappingResult" type="xs:boolean"/>
+                        <xs:element name="tableIDMapping" nillable="true"
+                                    type="q62:ArrayOfKeyValueOflongstring"
+                                    xmlns:q62="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WhoAmI">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q63:Logon"
+                                    xmlns:q63="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WhoAmIResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="WhoAmIResult" type="xs:boolean"/>
+                        <xs:element name="strXML" nillable="true" type="xs:string"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetLicense">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q64:Logon"
+                                    xmlns:q64="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nSite" type="xs:long"/>
+                        <xs:element name="nID" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetLicenseResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetLicenseResult" type="xs:boolean"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                        <xs:element name="Data" nillable="true" type="q65:CLicenseData"
+                                    xmlns:q65="http://schemas.datacontract.org/2004/07/GXSV"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetReportResultsStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q66:Logon"
+                                    xmlns:q66="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="resultHandle" nillable="true" type="xs:string"/>
+                        <xs:element name="nStatus" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetReportResultsStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="GetReportResultsStatusResult" type="xs:boolean"/>
+                        <xs:element name="nStatus" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PrepareRecordEventQuery">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="L" nillable="true" type="q67:Logon"
+                                    xmlns:q67="http://schemas.datacontract.org/2004/07/GXWCF2"/>
+                        <xs:element name="nTableID" type="xs:long"/>
+                        <xs:element name="nID" type="xs:long"/>
+                        <xs:element name="nSiteID" type="xs:long"/>
+                        <xs:element name="nControllerID" type="xs:long"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PrepareRecordEventQueryResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PrepareRecordEventQueryResult" type="xs:boolean"/>
+                        <xs:element name="nErrorCode" type="xs:long"/>
+                        <xs:element name="strErrorXML" nillable="true" type="xs:string"/>
+                        <xs:element name="strSQLHandle" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified"
+                   targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+            <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+            <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+            <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+            <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+            <xs:element name="byte" nillable="true" type="xs:byte"/>
+            <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+            <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+            <xs:element name="double" nillable="true" type="xs:double"/>
+            <xs:element name="float" nillable="true" type="xs:float"/>
+            <xs:element name="int" nillable="true" type="xs:int"/>
+            <xs:element name="long" nillable="true" type="xs:long"/>
+            <xs:element name="QName" nillable="true" type="xs:QName"/>
+            <xs:element name="short" nillable="true" type="xs:short"/>
+            <xs:element name="string" nillable="true" type="xs:string"/>
+            <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+            <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+            <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+            <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+            <xs:element name="char" nillable="true" type="tns:char"/>
+            <xs:simpleType name="char">
+                <xs:restriction base="xs:int"/>
+            </xs:simpleType>
+            <xs:element name="duration" nillable="true" type="tns:duration"/>
+            <xs:simpleType name="duration">
+                <xs:restriction base="xs:duration">
+                    <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+                    <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+                    <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="guid" nillable="true" type="tns:guid"/>
+            <xs:simpleType name="guid">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:attribute name="FactoryType" type="xs:QName"/>
+            <xs:attribute name="Id" type="xs:ID"/>
+            <xs:attribute name="Ref" type="xs:IDREF"/>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GXWCF2"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://schemas.datacontract.org/2004/07/GXWCF2">
+            <xs:complexType name="Logon">
+                <xs:sequence>
+                    <xs:element name="LogonType" type="xs:long"/>
+                    <xs:element name="Password" nillable="true" type="xs:string"/>
+                    <xs:element name="UserName" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Logon" nillable="true" type="tns:Logon"/>
+            <xs:complexType name="DeviceNames">
+                <xs:sequence>
+                    <xs:element name="RecordData" nillable="true" type="tns:ArrayOfDeviceName"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="DeviceNames" nillable="true" type="tns:DeviceNames"/>
+            <xs:complexType name="ArrayOfDeviceName">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="DeviceName" nillable="true"
+                                type="tns:DeviceName"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOfDeviceName" nillable="true" type="tns:ArrayOfDeviceName"/>
+            <xs:complexType name="DeviceName">
+                <xs:sequence>
+                    <xs:element name="Data" type="xs:long"/>
+                    <xs:element name="Data2" type="xs:long"/>
+                    <xs:element name="Data3" type="xs:long"/>
+                    <xs:element name="Data4" type="xs:long"/>
+                    <xs:element name="Data5" type="xs:long"/>
+                    <xs:element name="HostParent" type="xs:long"/>
+                    <xs:element name="ID" type="xs:long"/>
+                    <xs:element name="LastOperator" nillable="true" type="xs:string"/>
+                    <xs:element name="Name1" nillable="true" type="xs:string"/>
+                    <xs:element name="Name2" nillable="true" type="xs:string"/>
+                    <xs:element name="Parent" type="xs:long"/>
+                    <xs:element name="RecordGroup" type="xs:long"/>
+                    <xs:element name="SpareString1" nillable="true" type="xs:string"/>
+                    <xs:element name="SpareString2" nillable="true" type="xs:string"/>
+                    <xs:element name="StringData" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="DeviceName" nillable="true" type="tns:DeviceName"/>
+            <xs:complexType name="ReportDataCollection">
+                <xs:sequence>
+                    <xs:element name="ReportData" nillable="true" type="tns:ArrayOfReportData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ReportDataCollection" nillable="true" type="tns:ReportDataCollection"/>
+            <xs:complexType name="ArrayOfReportData">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="ReportData" nillable="true"
+                                type="tns:ReportData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOfReportData" nillable="true" type="tns:ArrayOfReportData"/>
+            <xs:complexType name="ReportData">
+                <xs:sequence>
+                    <xs:element name="AcknowledgedTime" type="xs:dateTime"/>
+                    <xs:element name="Description" nillable="true" type="xs:string"/>
+                    <xs:element name="DeviceType" type="xs:long"/>
+                    <xs:element name="DoorID" type="xs:long"/>
+                    <xs:element name="DoorName" nillable="true" type="xs:string"/>
+                    <xs:element name="EventID" type="xs:long"/>
+                    <xs:element name="EventTypeID" type="xs:long"/>
+                    <xs:element name="Field" type="xs:dateTime"/>
+                    <xs:element name="Logged" type="xs:dateTime"/>
+                    <xs:element name="RecordIndex1" type="xs:long"/>
+                    <xs:element name="RecordIndex2" type="xs:long"/>
+                    <xs:element name="RecordIndex3" type="xs:long"/>
+                    <xs:element name="RecordIndex4" type="xs:long"/>
+                    <xs:element name="RecordIndex5" type="xs:long"/>
+                    <xs:element name="UserID" type="xs:long"/>
+                    <xs:element name="UserName" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ReportData" nillable="true" type="tns:ReportData"/>
+            <xs:simpleType name="MC_FLOOR_CONTROL">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICFLOOR_Deactivate"/>
+                    <xs:enumeration value="ICFLOOR_ActivateTimed"/>
+                    <xs:enumeration value="ICFLOOR_ActivateLatched"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_FLOOR_CONTROL" nillable="true" type="tns:MC_FLOOR_CONTROL"/>
+            <xs:simpleType name="MC_PGM_CONTROL">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICPGM_Deactivate"/>
+                    <xs:enumeration value="ICPGM_Activate"/>
+                    <xs:enumeration value="ICPGM_ActivateTimed"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_PGM_CONTROL" nillable="true" type="tns:MC_PGM_CONTROL"/>
+            <xs:simpleType name="MC_AREA_CONTROL">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICAREA_DisarmArea"/>
+                    <xs:enumeration value="ICAREA_Disarm24Hour"/>
+                    <xs:enumeration value="ICAREA_DisarmAll"/>
+                    <xs:enumeration value="ICAREA_ArmArea"/>
+                    <xs:enumeration value="ICAREA_ForceArmArea"/>
+                    <xs:enumeration value="ICAREA_ArmAreaInstant"/>
+                    <xs:enumeration value="ICAREA_ForceArmAreaInstant"/>
+                    <xs:enumeration value="ICAREA_WalkTestEnable"/>
+                    <xs:enumeration value="ICAREA_WalkTestDisable"/>
+                    <xs:enumeration value="ICAREA_SilenceAlarm"/>
+                    <xs:enumeration value="ICAREA_ArmAreaStay"/>
+                    <xs:enumeration value="ICAREA_ArmArea24"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_AREA_CONTROL" nillable="true" type="tns:MC_AREA_CONTROL"/>
+            <xs:simpleType name="MC_PROGFUNC_CONTROL">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICPGM_Start"/>
+                    <xs:enumeration value="ICPGM_Stop"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_PROGFUNC_CONTROL" nillable="true" type="tns:MC_PROGFUNC_CONTROL"/>
+            <xs:simpleType name="MC_DOOR_CONTROL">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICDOOR_LockDoor"/>
+                    <xs:enumeration value="ICDOOR_UnlockDoor"/>
+                    <xs:enumeration value="ICDOOR_UnlockDoorLatched"/>
+                    <xs:enumeration value="ICDOOR_DoorLockoutEntry"/>
+                    <xs:enumeration value="ICDOOR_DoorLockoutExit"/>
+                    <xs:enumeration value="ICDOOR_DoorLockoutEntryExit"/>
+                    <xs:enumeration value="ICDOOR_DoorLockoutClear"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_DOOR_CONTROL" nillable="true" type="tns:MC_DOOR_CONTROL"/>
+            <xs:simpleType name="MC_ZONE_CONTROL">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICZONE_RemoveBypass"/>
+                    <xs:enumeration value="ICZONE_BypassUntilNextDisarm"/>
+                    <xs:enumeration value="ICZONE_BypassPermanently"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_ZONE_CONTROL" nillable="true" type="tns:MC_ZONE_CONTROL"/>
+            <xs:simpleType name="MC_ZONE_TYPE">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICZONE_Zone"/>
+                    <xs:enumeration value="ICZONE_TroubleZone"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_ZONE_TYPE" nillable="true" type="tns:MC_ZONE_TYPE"/>
+            <xs:simpleType name="MC_MODULE_COMMAND">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICMODULE_Update"/>
+                    <xs:enumeration value="ICMODULE_Secure"/>
+                    <xs:enumeration value="ICMODULE_UnSecure"/>
+                    <xs:enumeration value="ICMODULE_UpdateSingle"/>
+                    <xs:enumeration value="ICMODULE_UpdateOffline"/>
+                    <xs:enumeration value="ICMODULE_UpdateSingleUsers"/>
+                    <xs:enumeration value="ICMODULE_RestartModuleInBiosMode"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_MODULE_COMMAND" nillable="true" type="tns:MC_MODULE_COMMAND"/>
+            <xs:simpleType name="MC_MODULE_COMMAND_TYPE">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICMODULE_Invalid"/>
+                    <xs:enumeration value="ICMODULE_ControlPanel"/>
+                    <xs:enumeration value="ICMODULE_LCDKeypad"/>
+                    <xs:enumeration value="ICMODULE_ZoneExpander"/>
+                    <xs:enumeration value="ICMODULE_ReaderExpander"/>
+                    <xs:enumeration value="ICMODULE_PGMExpander"/>
+                    <xs:enumeration value="ICMODULE_AnalogExpander"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_MODULE_COMMAND_TYPE" nillable="true" type="tns:MC_MODULE_COMMAND_TYPE"/>
+            <xs:simpleType name="MC_SERVICE_CONTROL">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ICSERVICE_Stop"/>
+                    <xs:enumeration value="ICSERVICE_Start"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MC_SERVICE_CONTROL" nillable="true" type="tns:MC_SERVICE_CONTROL"/>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GXSV"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/GXSV">
+            <xs:complexType name="LogonData">
+                <xs:sequence>
+                    <xs:element name="Cookie" type="xs:long"/>
+                    <xs:element name="Hash64" nillable="true" type="xs:string"/>
+                    <xs:element name="Logon" nillable="true" type="xs:string"/>
+                    <xs:element name="NT" type="xs:boolean"/>
+                    <xs:element name="OperatorID" type="xs:long"/>
+                    <xs:element name="OperatorName" nillable="true" type="xs:string"/>
+                    <xs:element name="OperatorName2" nillable="true" type="xs:string"/>
+                    <xs:element name="Password" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="LogonData" nillable="true" type="tns:LogonData"/>
+            <xs:complexType name="CImageData">
+                <xs:sequence>
+                    <xs:element name="Bytes" nillable="true" type="tns:ByteCollection"/>
+                    <xs:element name="ID" type="xs:long"/>
+                    <xs:element name="Name" nillable="true" type="xs:string"/>
+                    <xs:element name="Type" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="CImageData" nillable="true" type="tns:CImageData"/>
+            <xs:complexType name="ByteCollection">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="unsignedByte" type="xs:unsignedByte"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ByteCollection" nillable="true" type="tns:ByteCollection"/>
+            <xs:complexType name="EventWindowInformation">
+                <xs:sequence>
+                    <xs:element name="TotalMostRecentEventID" type="xs:long"/>
+                    <xs:element name="TotalOldestEventID" type="xs:long"/>
+                    <xs:element name="WindowMostRecentEventID" type="xs:long"/>
+                    <xs:element name="WindowOldestEventID" type="xs:long"/>
+                    <xs:element name="WindowSize" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="EventWindowInformation" nillable="true" type="tns:EventWindowInformation"/>
+            <xs:complexType name="CLicenseData">
+                <xs:sequence>
+                    <xs:element name="ActiveDirectoryOperators" nillable="true" type="xs:string"/>
+                    <xs:element name="ActiveDirectoryOperatorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="ActiveDirectoryUsers" nillable="true" type="xs:string"/>
+                    <xs:element name="ActiveDirectoryUsersExpiry" type="xs:dateTime"/>
+                    <xs:element name="Apartments" nillable="true" type="xs:string"/>
+                    <xs:element name="ApartmentsExpiry" type="xs:dateTime"/>
+                    <xs:element name="ApplicationVersion" nillable="true" type="xs:string"/>
+                    <xs:element name="Attendance" nillable="true" type="xs:string"/>
+                    <xs:element name="AttendanceExpiry" type="xs:dateTime"/>
+                    <xs:element name="BetaFeatures" nillable="true" type="xs:string"/>
+                    <xs:element name="BetaFeaturesExpiry" type="xs:dateTime"/>
+                    <xs:element name="Biometrics" nillable="true" type="xs:string"/>
+                    <xs:element name="BiometricsExpiry" type="xs:dateTime"/>
+                    <xs:element name="BookingSystem" nillable="true" type="xs:string"/>
+                    <xs:element name="BookingSystemExpiry" type="xs:dateTime"/>
+                    <xs:element name="CSVImport" nillable="true" type="xs:string"/>
+                    <xs:element name="CSVImportExpiry" type="xs:dateTime"/>
+                    <xs:element name="CalendarActions" nillable="true" type="xs:string"/>
+                    <xs:element name="CalendarActionsExpiry" type="xs:dateTime"/>
+                    <xs:element name="DataSyncService" nillable="true" type="xs:string"/>
+                    <xs:element name="DataSyncServiceExpiry" type="xs:dateTime"/>
+                    <xs:element name="DoorGroupsInDoorGroups" nillable="true" type="xs:string"/>
+                    <xs:element name="DoorGroupsInDoorGroupsExpiry" type="xs:dateTime"/>
+                    <xs:element name="EMailOnEventExpiry" type="xs:dateTime"/>
+                    <xs:element name="EMailOnEvents" nillable="true" type="xs:string"/>
+                    <xs:element name="EMailReports" nillable="true" type="xs:string"/>
+                    <xs:element name="EMailReportsExpiry" type="xs:dateTime"/>
+                    <xs:element name="FloorPlans" nillable="true" type="xs:string"/>
+                    <xs:element name="FloorPlansExpiry" type="xs:dateTime"/>
+                    <xs:element name="GXSOAPInterface" nillable="true" type="xs:string"/>
+                    <xs:element name="GXSOAPInterfaceExpiry" type="xs:dateTime"/>
+                    <xs:element name="ID" type="xs:long"/>
+                    <xs:element name="Index" type="xs:long"/>
+                    <xs:element name="InovonicsIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="InovonicsIntegrationExpiry" type="xs:dateTime"/>
+                    <xs:element name="InstallerAddress" nillable="true" type="xs:string"/>
+                    <xs:element name="InstallerContact" nillable="true" type="xs:string"/>
+                    <xs:element name="InstallerEmail" nillable="true" type="xs:string"/>
+                    <xs:element name="InstallerFax" nillable="true" type="xs:string"/>
+                    <xs:element name="InstallerName" nillable="true" type="xs:string"/>
+                    <xs:element name="InstallerPhone" nillable="true" type="xs:string"/>
+                    <xs:element name="KeySecureIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="KeySecureIntegrationExpiry" type="xs:dateTime"/>
+                    <xs:element name="KeyWatcherIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="KeyWatcherIntegrationExpiry" type="xs:dateTime"/>
+                    <xs:element name="LicenseData" nillable="true" type="xs:string"/>
+                    <xs:element name="LicenseVersion" nillable="true" type="xs:string"/>
+                    <xs:element name="MachineData" nillable="true" type="xs:string"/>
+                    <xs:element name="MusterReport" nillable="true" type="xs:string"/>
+                    <xs:element name="MusterReportExpiry" type="xs:dateTime"/>
+                    <xs:element name="Name" nillable="true" type="xs:string"/>
+                    <xs:element name="Name2" nillable="true" type="xs:string"/>
+                    <xs:element name="NumOfAllegionDoors" nillable="true" type="xs:string"/>
+                    <xs:element name="NumOfAllegionDoorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumOfControllerSNMP" nillable="true" type="xs:string"/>
+                    <xs:element name="NumOfControllerSNMPExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumOfSIP" nillable="true" type="xs:string"/>
+                    <xs:element name="NumOfSIPExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfAperioDoors" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfAperioDoorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfAreas" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfAreasExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfBiometrics" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfBiometricsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfCameras" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfCamerasExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfClients" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfClientsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfControllers" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfControllersExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfDVRs" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfDVRsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfDoors" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfDoorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfElevatorHLIs" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfElevatorHLIsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfICT485Readers" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfICT485ReadersExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfInovonicsIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfInovonicsIntegrationExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfIntercoms" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfIntercomsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfKabaLocks" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfKabaLocksExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfOSDPNumbers" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfOSDPReaders" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfOperators" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfOperatorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfPTZEventTriggers" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfPTZEventTriggersExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfRedwallIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfRedwallIntegrationExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfSallisDoors" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfSallisDoorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfSaltoDoors" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfSaltoDoorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfSites" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfSitesExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfThirdPartyGenericReaders" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfThirdPartyGenericReadersExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfUsers" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfUsersExpiry" type="xs:dateTime"/>
+                    <xs:element name="NumberOfWebOperators" nillable="true" type="xs:string"/>
+                    <xs:element name="NumberOfWebOperatorsExpiry" type="xs:dateTime"/>
+                    <xs:element name="PINPlusNAsDuress" nillable="true" type="xs:string"/>
+                    <xs:element name="PINPlusNAsDuressExpiry" type="xs:dateTime"/>
+                    <xs:element name="PTZEventTrigger" nillable="true" type="xs:string"/>
+                    <xs:element name="PTZEventTriggerExpiry" type="xs:dateTime"/>
+                    <xs:element name="PhotoID" nillable="true" type="xs:string"/>
+                    <xs:element name="PhotoIDExpiry" type="xs:dateTime"/>
+                    <xs:element name="RedwallIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="RedwallIntegrationExpiry" type="xs:dateTime"/>
+                    <xs:element name="SDKExpiry" type="xs:dateTime"/>
+                    <xs:element name="SerialNumber" nillable="true" type="xs:string"/>
+                    <xs:element name="SiteAddress" nillable="true" type="xs:string"/>
+                    <xs:element name="SiteContact" nillable="true" type="xs:string"/>
+                    <xs:element name="SiteEMail" nillable="true" type="xs:string"/>
+                    <xs:element name="SiteFax" nillable="true" type="xs:string"/>
+                    <xs:element name="SiteName" nillable="true" type="xs:string"/>
+                    <xs:element name="SitePhone" nillable="true" type="xs:string"/>
+                    <xs:element name="SoftwareExpiry" type="xs:dateTime"/>
+                    <xs:element name="SoftwareMaintenanceExpiry" type="xs:dateTime"/>
+                    <xs:element name="SupportsComs" nillable="true" type="xs:string"/>
+                    <xs:element name="SupportsComsExpiry" type="xs:dateTime"/>
+                    <xs:element name="VideoIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="VideoVerificationExpiry" type="xs:dateTime"/>
+                    <xs:element name="VingCardIntegration" nillable="true" type="xs:string"/>
+                    <xs:element name="VingCardIntegrationExpiry" type="xs:dateTime"/>
+                    <xs:element name="VisitorManagement" nillable="true" type="xs:string"/>
+                    <xs:element name="VisitorManagementExpiry" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="CLicenseData" nillable="true" type="tns:CLicenseData"/>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified"
+                   targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <xs:complexType name="ArrayOflong">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="long" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOflong" nillable="true" type="tns:ArrayOflong"/>
+            <xs:complexType name="ArrayOfKeyValueOflongstring">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="KeyValueOflongstring">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Key" type="xs:long"/>
+                                <xs:element name="Value" nillable="true" type="xs:string"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOfKeyValueOflongstring" nillable="true" type="tns:ArrayOfKeyValueOflongstring"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="IService1_AddRecord_InputMessage">
+        <wsdl:part name="parameters" element="tns:AddRecord"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_AddRecord_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AddRecordResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_AddRecordSC_InputMessage">
+        <wsdl:part name="parameters" element="tns:AddRecordSC"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_AddRecordSC_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AddRecordSCResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_UpdateRecord_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateRecord"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_UpdateRecord_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateRecordResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetRecord_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetRecord"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetRecord_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetRecordResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_DeleteRecord_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteRecord"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_DeleteRecord_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteRecordResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ListRecords_InputMessage">
+        <wsdl:part name="parameters" element="tns:ListRecords"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ListRecords_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ListRecordsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_EventReportByRecordGroup_InputMessage">
+        <wsdl:part name="parameters" element="tns:EventReportByRecordGroup"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_EventReportByRecordGroup_OutputMessage">
+        <wsdl:part name="parameters" element="tns:EventReportByRecordGroupResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_EventReportByUser_InputMessage">
+        <wsdl:part name="parameters" element="tns:EventReportByUser"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_EventReportByUser_OutputMessage">
+        <wsdl:part name="parameters" element="tns:EventReportByUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetCurrentLogon_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetCurrentLogon"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetCurrentLogon_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetCurrentLogonResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_SetLogon_InputMessage">
+        <wsdl:part name="parameters" element="tns:SetLogon"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_SetLogon_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SetLogonResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_TestMainDatabaseConnection_InputMessage">
+        <wsdl:part name="parameters" element="tns:TestMainDatabaseConnection"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_TestMainDatabaseConnection_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TestMainDatabaseConnectionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_TestEventDatabaseConnection_InputMessage">
+        <wsdl:part name="parameters" element="tns:TestEventDatabaseConnection"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_TestEventDatabaseConnection_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TestEventDatabaseConnectionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetDeviceStatus_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDeviceStatus"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetDeviceStatus_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDeviceStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlFloor_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlFloor"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlFloor_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlFloorResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlPGM_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlPGM"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlPGM_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlPGMResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlArea_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlArea"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlArea_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlAreaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlProgFunc_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlProgFunc"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlProgFunc_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlProgFuncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlDoor_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlDoor"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlDoor_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlDoorResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlZone_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlZone"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlZone_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlZoneResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ModuleCommand_InputMessage">
+        <wsdl:part name="parameters" element="tns:ModuleCommand"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ModuleCommand_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ModuleCommandResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlService_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlService"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlService_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlServiceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_SetDateTime_InputMessage">
+        <wsdl:part name="parameters" element="tns:SetDateTime"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_SetDateTime_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SetDateTimeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_InitialiseKabaKey_InputMessage">
+        <wsdl:part name="parameters" element="tns:InitialiseKabaKey"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_InitialiseKabaKey_OutputMessage">
+        <wsdl:part name="parameters" element="tns:InitialiseKabaKeyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlDevice_InputMessage">
+        <wsdl:part name="parameters" element="tns:ControlDevice"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ControlDevice_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ControlDeviceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ResetPassword_InputMessage">
+        <wsdl:part name="parameters" element="tns:ResetPassword"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ResetPassword_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ResetPasswordResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetStatusListStatus_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetStatusListStatus"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetStatusListStatus_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetStatusListStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetLatestEvents_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetLatestEvents"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetLatestEvents_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetLatestEventsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_RunReportDefaults_InputMessage">
+        <wsdl:part name="parameters" element="tns:RunReportDefaults"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_RunReportDefaults_OutputMessage">
+        <wsdl:part name="parameters" element="tns:RunReportDefaultsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_RunReport_InputMessage">
+        <wsdl:part name="parameters" element="tns:RunReport"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_RunReport_OutputMessage">
+        <wsdl:part name="parameters" element="tns:RunReportResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_FindRecords_InputMessage">
+        <wsdl:part name="parameters" element="tns:FindRecords"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_FindRecords_OutputMessage">
+        <wsdl:part name="parameters" element="tns:FindRecordsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetImageData_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetImageData"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetImageData_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetImageDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_PrepareEventReport_InputMessage">
+        <wsdl:part name="parameters" element="tns:PrepareEventReport"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_PrepareEventReport_OutputMessage">
+        <wsdl:part name="parameters" element="tns:PrepareEventReportResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ExecuteEventReport_InputMessage">
+        <wsdl:part name="parameters" element="tns:ExecuteEventReport"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_ExecuteEventReport_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ExecuteEventReportResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetEventReportData_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetEventReportData"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetEventReportData_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetEventReportDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetMostRecentEventID_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetMostRecentEventID"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetMostRecentEventID_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetMostRecentEventIDResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetTableSchema_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetTableSchema"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetTableSchema_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetTableSchemaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetTableIDNameMapping_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetTableIDNameMapping"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetTableIDNameMapping_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetTableIDNameMappingResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_WhoAmI_InputMessage">
+        <wsdl:part name="parameters" element="tns:WhoAmI"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_WhoAmI_OutputMessage">
+        <wsdl:part name="parameters" element="tns:WhoAmIResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetLicense_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetLicense"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetLicense_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetLicenseResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetReportResultsStatus_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetReportResultsStatus"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_GetReportResultsStatus_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetReportResultsStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_PrepareRecordEventQuery_InputMessage">
+        <wsdl:part name="parameters" element="tns:PrepareRecordEventQuery"/>
+    </wsdl:message>
+    <wsdl:message name="IService1_PrepareRecordEventQuery_OutputMessage">
+        <wsdl:part name="parameters" element="tns:PrepareRecordEventQueryResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="IService1">
+        <wsdl:operation name="AddRecord">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddRecord"
+                        message="tns:IService1_AddRecord_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddRecordResponse"
+                         message="tns:IService1_AddRecord_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddRecordSC">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddRecordSC"
+                        message="tns:IService1_AddRecordSC_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddRecordSCResponse"
+                         message="tns:IService1_AddRecordSC_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateRecord">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/UpdateRecord"
+                        message="tns:IService1_UpdateRecord_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/UpdateRecordResponse"
+                         message="tns:IService1_UpdateRecord_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetRecord">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetRecord"
+                        message="tns:IService1_GetRecord_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetRecordResponse"
+                         message="tns:IService1_GetRecord_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteRecord">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/DeleteRecord"
+                        message="tns:IService1_DeleteRecord_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/DeleteRecordResponse"
+                         message="tns:IService1_DeleteRecord_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ListRecords">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ListRecords"
+                        message="tns:IService1_ListRecords_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ListRecordsResponse"
+                         message="tns:IService1_ListRecords_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="EventReportByRecordGroup">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/EventReportByRecordGroup"
+                        message="tns:IService1_EventReportByRecordGroup_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/EventReportByRecordGroupResponse"
+                         message="tns:IService1_EventReportByRecordGroup_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="EventReportByUser">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/EventReportByUser"
+                        message="tns:IService1_EventReportByUser_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/EventReportByUserResponse"
+                         message="tns:IService1_EventReportByUser_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCurrentLogon">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetCurrentLogon"
+                        message="tns:IService1_GetCurrentLogon_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetCurrentLogonResponse"
+                         message="tns:IService1_GetCurrentLogon_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetLogon">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetLogon"
+                        message="tns:IService1_SetLogon_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetLogonResponse"
+                         message="tns:IService1_SetLogon_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TestMainDatabaseConnection">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/TestMainDatabaseConnection"
+                        message="tns:IService1_TestMainDatabaseConnection_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/TestMainDatabaseConnectionResponse"
+                         message="tns:IService1_TestMainDatabaseConnection_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TestEventDatabaseConnection">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/TestEventDatabaseConnection"
+                        message="tns:IService1_TestEventDatabaseConnection_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/TestEventDatabaseConnectionResponse"
+                         message="tns:IService1_TestEventDatabaseConnection_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDeviceStatus">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetDeviceStatus"
+                        message="tns:IService1_GetDeviceStatus_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetDeviceStatusResponse"
+                         message="tns:IService1_GetDeviceStatus_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlFloor">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlFloor"
+                        message="tns:IService1_ControlFloor_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlFloorResponse"
+                         message="tns:IService1_ControlFloor_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlPGM">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlPGM"
+                        message="tns:IService1_ControlPGM_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlPGMResponse"
+                         message="tns:IService1_ControlPGM_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlArea">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlArea"
+                        message="tns:IService1_ControlArea_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlAreaResponse"
+                         message="tns:IService1_ControlArea_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlProgFunc">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlProgFunc"
+                        message="tns:IService1_ControlProgFunc_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlProgFuncResponse"
+                         message="tns:IService1_ControlProgFunc_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlDoor">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlDoor"
+                        message="tns:IService1_ControlDoor_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlDoorResponse"
+                         message="tns:IService1_ControlDoor_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlZone">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlZone"
+                        message="tns:IService1_ControlZone_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlZoneResponse"
+                         message="tns:IService1_ControlZone_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ModuleCommand">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ModuleCommand"
+                        message="tns:IService1_ModuleCommand_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ModuleCommandResponse"
+                         message="tns:IService1_ModuleCommand_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlService">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlService"
+                        message="tns:IService1_ControlService_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlServiceResponse"
+                         message="tns:IService1_ControlService_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetDateTime">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetDateTime"
+                        message="tns:IService1_SetDateTime_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetDateTimeResponse"
+                         message="tns:IService1_SetDateTime_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="InitialiseKabaKey">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/InitialiseKabaKey"
+                        message="tns:IService1_InitialiseKabaKey_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/InitialiseKabaKeyResponse"
+                         message="tns:IService1_InitialiseKabaKey_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ControlDevice">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ControlDevice"
+                        message="tns:IService1_ControlDevice_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ControlDeviceResponse"
+                         message="tns:IService1_ControlDevice_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ResetPassword">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ResetPassword"
+                        message="tns:IService1_ResetPassword_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ResetPasswordResponse"
+                         message="tns:IService1_ResetPassword_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetStatusListStatus">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetStatusListStatus"
+                        message="tns:IService1_GetStatusListStatus_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetStatusListStatusResponse"
+                         message="tns:IService1_GetStatusListStatus_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetLatestEvents">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetLatestEvents"
+                        message="tns:IService1_GetLatestEvents_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetLatestEventsResponse"
+                         message="tns:IService1_GetLatestEvents_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="RunReportDefaults">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/RunReportDefaults"
+                        message="tns:IService1_RunReportDefaults_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/RunReportDefaultsResponse"
+                         message="tns:IService1_RunReportDefaults_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="RunReport">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/RunReport"
+                        message="tns:IService1_RunReport_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/RunReportResponse"
+                         message="tns:IService1_RunReport_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="FindRecords">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/FindRecords"
+                        message="tns:IService1_FindRecords_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/FindRecordsResponse"
+                         message="tns:IService1_FindRecords_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetImageData">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetImageData"
+                        message="tns:IService1_GetImageData_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetImageDataResponse"
+                         message="tns:IService1_GetImageData_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetVersion">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetVersion"
+                        message="tns:IService1_GetVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetVersionResponse"
+                         message="tns:IService1_GetVersion_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="PrepareEventReport">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/PrepareEventReport"
+                        message="tns:IService1_PrepareEventReport_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/PrepareEventReportResponse"
+                         message="tns:IService1_PrepareEventReport_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ExecuteEventReport">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/ExecuteEventReport"
+                        message="tns:IService1_ExecuteEventReport_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/ExecuteEventReportResponse"
+                         message="tns:IService1_ExecuteEventReport_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetEventReportData">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetEventReportData"
+                        message="tns:IService1_GetEventReportData_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetEventReportDataResponse"
+                         message="tns:IService1_GetEventReportData_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetMostRecentEventID">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetMostRecentEventID"
+                        message="tns:IService1_GetMostRecentEventID_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetMostRecentEventIDResponse"
+                         message="tns:IService1_GetMostRecentEventID_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTableSchema">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetTableSchema"
+                        message="tns:IService1_GetTableSchema_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetTableSchemaResponse"
+                         message="tns:IService1_GetTableSchema_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTableIDNameMapping">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetTableIDNameMapping"
+                        message="tns:IService1_GetTableIDNameMapping_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetTableIDNameMappingResponse"
+                         message="tns:IService1_GetTableIDNameMapping_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="WhoAmI">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/WhoAmI" message="tns:IService1_WhoAmI_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/WhoAmIResponse"
+                         message="tns:IService1_WhoAmI_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetLicense">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetLicense"
+                        message="tns:IService1_GetLicense_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetLicenseResponse"
+                         message="tns:IService1_GetLicense_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetReportResultsStatus">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetReportResultsStatus"
+                        message="tns:IService1_GetReportResultsStatus_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetReportResultsStatusResponse"
+                         message="tns:IService1_GetReportResultsStatus_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="PrepareRecordEventQuery">
+            <wsdl:input wsaw:Action="http://tempuri.org/IService1/PrepareRecordEventQuery"
+                        message="tns:IService1_PrepareRecordEventQuery_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IService1/PrepareRecordEventQueryResponse"
+                         message="tns:IService1_PrepareRecordEventQuery_OutputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="AddRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/AddRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddRecordSC">
+            <soap:operation soapAction="http://tempuri.org/IService1/AddRecordSC" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/UpdateRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/DeleteRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ListRecords">
+            <soap:operation soapAction="http://tempuri.org/IService1/ListRecords" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EventReportByRecordGroup">
+            <soap:operation soapAction="http://tempuri.org/IService1/EventReportByRecordGroup" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EventReportByUser">
+            <soap:operation soapAction="http://tempuri.org/IService1/EventReportByUser" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCurrentLogon">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetCurrentLogon" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetLogon">
+            <soap:operation soapAction="http://tempuri.org/IService1/SetLogon" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestMainDatabaseConnection">
+            <soap:operation soapAction="http://tempuri.org/IService1/TestMainDatabaseConnection" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestEventDatabaseConnection">
+            <soap:operation soapAction="http://tempuri.org/IService1/TestEventDatabaseConnection" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetDeviceStatus">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetDeviceStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlFloor">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlFloor" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlPGM">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlPGM" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlArea">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlArea" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlProgFunc">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlProgFunc" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlDoor">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlDoor" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlZone">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlZone" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ModuleCommand">
+            <soap:operation soapAction="http://tempuri.org/IService1/ModuleCommand" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlService">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlService" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetDateTime">
+            <soap:operation soapAction="http://tempuri.org/IService1/SetDateTime" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InitialiseKabaKey">
+            <soap:operation soapAction="http://tempuri.org/IService1/InitialiseKabaKey" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlDevice">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlDevice" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResetPassword">
+            <soap:operation soapAction="http://tempuri.org/IService1/ResetPassword" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetStatusListStatus">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetStatusListStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetLatestEvents">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetLatestEvents" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RunReportDefaults">
+            <soap:operation soapAction="http://tempuri.org/IService1/RunReportDefaults" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RunReport">
+            <soap:operation soapAction="http://tempuri.org/IService1/RunReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="FindRecords">
+            <soap:operation soapAction="http://tempuri.org/IService1/FindRecords" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetImageData">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetImageData" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetVersion">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetVersion" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PrepareEventReport">
+            <soap:operation soapAction="http://tempuri.org/IService1/PrepareEventReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ExecuteEventReport">
+            <soap:operation soapAction="http://tempuri.org/IService1/ExecuteEventReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetEventReportData">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetEventReportData" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetMostRecentEventID">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetMostRecentEventID" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTableSchema">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetTableSchema" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTableIDNameMapping">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetTableIDNameMapping" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WhoAmI">
+            <soap:operation soapAction="http://tempuri.org/IService1/WhoAmI" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetLicense">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetLicense" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetReportResultsStatus">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetReportResultsStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PrepareRecordEventQuery">
+            <soap:operation soapAction="http://tempuri.org/IService1/PrepareRecordEventQuery" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="BasicHttpBinding_IService11" type="tns:IService1">
+        <wsp:PolicyReference URI="#BasicHttpBinding_IService11_policy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="AddRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/AddRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddRecordSC">
+            <soap:operation soapAction="http://tempuri.org/IService1/AddRecordSC" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/UpdateRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteRecord">
+            <soap:operation soapAction="http://tempuri.org/IService1/DeleteRecord" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ListRecords">
+            <soap:operation soapAction="http://tempuri.org/IService1/ListRecords" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EventReportByRecordGroup">
+            <soap:operation soapAction="http://tempuri.org/IService1/EventReportByRecordGroup" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EventReportByUser">
+            <soap:operation soapAction="http://tempuri.org/IService1/EventReportByUser" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCurrentLogon">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetCurrentLogon" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetLogon">
+            <soap:operation soapAction="http://tempuri.org/IService1/SetLogon" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestMainDatabaseConnection">
+            <soap:operation soapAction="http://tempuri.org/IService1/TestMainDatabaseConnection" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TestEventDatabaseConnection">
+            <soap:operation soapAction="http://tempuri.org/IService1/TestEventDatabaseConnection" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetDeviceStatus">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetDeviceStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlFloor">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlFloor" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlPGM">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlPGM" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlArea">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlArea" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlProgFunc">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlProgFunc" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlDoor">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlDoor" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlZone">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlZone" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ModuleCommand">
+            <soap:operation soapAction="http://tempuri.org/IService1/ModuleCommand" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlService">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlService" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetDateTime">
+            <soap:operation soapAction="http://tempuri.org/IService1/SetDateTime" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InitialiseKabaKey">
+            <soap:operation soapAction="http://tempuri.org/IService1/InitialiseKabaKey" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ControlDevice">
+            <soap:operation soapAction="http://tempuri.org/IService1/ControlDevice" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResetPassword">
+            <soap:operation soapAction="http://tempuri.org/IService1/ResetPassword" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetStatusListStatus">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetStatusListStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetLatestEvents">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetLatestEvents" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RunReportDefaults">
+            <soap:operation soapAction="http://tempuri.org/IService1/RunReportDefaults" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RunReport">
+            <soap:operation soapAction="http://tempuri.org/IService1/RunReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="FindRecords">
+            <soap:operation soapAction="http://tempuri.org/IService1/FindRecords" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetImageData">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetImageData" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetVersion">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetVersion" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PrepareEventReport">
+            <soap:operation soapAction="http://tempuri.org/IService1/PrepareEventReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ExecuteEventReport">
+            <soap:operation soapAction="http://tempuri.org/IService1/ExecuteEventReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetEventReportData">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetEventReportData" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetMostRecentEventID">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetMostRecentEventID" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTableSchema">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetTableSchema" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTableIDNameMapping">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetTableIDNameMapping" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WhoAmI">
+            <soap:operation soapAction="http://tempuri.org/IService1/WhoAmI" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetLicense">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetLicense" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetReportResultsStatus">
+            <soap:operation soapAction="http://tempuri.org/IService1/GetReportResultsStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PrepareRecordEventQuery">
+            <soap:operation soapAction="http://tempuri.org/IService1/PrepareRecordEventQuery" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Service1">
+        <wsdl:port name="BasicHttpBinding_IService1" binding="tns:BasicHttpBinding_IService1">
+            <soap:address location="http://10.10.10.15:8030/ProtegeGXSOAPService/Service.svc"/>
+        </wsdl:port>
+        <wsdl:port name="BasicHttpBinding_IService11" binding="tns:BasicHttpBinding_IService11">
+            <soap:address location="https://office-48c:8040/ProtegeGXSOAPService/Service.svc"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

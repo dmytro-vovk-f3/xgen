@@ -32,6 +32,8 @@ type Options struct {
 	Package             string
 	IncludeMap          map[string]bool
 	LocalNameNSMap      map[string]string
+	NSAliases           map[string]string
+	CurrentSchemaNS     string
 	NSSchemaLocationMap map[string]string
 	ParseFileList       map[string]bool
 	ParseFileMap        map[string][]interface{}
